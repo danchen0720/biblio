@@ -1,0 +1,43 @@
+文學小說 Literature & Fiction
+商業理財 Business & Investing
+藝術設計 Arts & Design
+人文史地 History,Biographies & Memoirs
+社會科學 Social Sciences
+自然科普 Science
+心理勵志 Self-Help,
+醫療保健 Medical Books,Health, Fitness & Dieting
+飲食     Cookbooks, Food & Wine
+生活風格 Lifestyle
+旅遊     Travel 
+宗教命理 Religion & Spirituality
+親子教養 Parenting
+童書/青少年文學 Teen & Young Adult
+輕小說   Light Novel
+漫畫     Comics
+語言學習 Education language
+考試用書 Reference
+電腦資訊 Computers & Technology
+專業/教科書/政府出版品 Professional & Technical,Government publications
+
+INSERT INTO "PUBLIC"."TAG"
+("NAME", "CHTNAME" )
+VALUES ('Literature & Fiction', '文學小說'),
+('Business, Investing', '商業理財'),
+('Arts, Design', '藝術設計'),
+ ('History,Biographies, Memoirs', '人文史地'),
+('Social Sciences', '社會科學'),
+('Science', '自然科普'),
+('Self-Help', '心理勵志'),
+('Medical Books,Health, Fitness, Dieting', '醫療保健'),
+ ('Cookbooks, Food & Wine', '飲食'),
+ ('Lifestyle', '生活風格'),
+ ('Travel', '旅遊'),
+('Religion, Spirituality', '宗教命理'),
+ ('Parenting', '親子教養'),
+ ('Teen, Young Adult', '童書/青少年文學'),
+('Light Novel', '輕小說'),
+ ('Comics', '漫畫'),
+('Language Learning', '語言學習'),
+ ('Reference', '考試用書'),
+ ('Computers & Technology', '電腦資訊'),
+ ('Professional, coursebook, Government publications', '專業/教科書/政府出版品')
