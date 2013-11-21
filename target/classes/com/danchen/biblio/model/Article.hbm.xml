@@ -20,7 +20,7 @@
         <property name="state" type="int">
             <column name="STATE" not-null="true" />
         </property>
-        <property name="content" type="clob">
+        <property name="content" type="org.hibernate.type.StringClobType">
             <column name="CONTENT" />
         </property>
         <property name="title" type="string">
