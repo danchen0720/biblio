@@ -1,4 +1,17 @@
-<zk>
-	<window>
-	</window>
+<zk>																
+	<div width="600px" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('artvm') @init('com.danchen.biblio.viewmodel.ArticleViewModel')">
+		<listbox model="@bind(artvm.tagList)">
+			<listhead>
+				<listheader label="id"/>
+				<listheader label="name"/>
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="${each.id}"></listcell>
+					<listcell label="${each.name}"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+	</div>
 </zk>

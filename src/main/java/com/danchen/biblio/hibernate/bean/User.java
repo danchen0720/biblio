@@ -1,6 +1,6 @@
-package com.danchen.biblio.model;
+package com.danchen.biblio.hibernate.bean;
 
-// Generated Nov 21, 2013 4:45:51 PM by Hibernate Tools 3.4.0.CR1
+// Generated Nov 22, 2013 12:31:25 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,29 +10,33 @@ import java.util.Set;
  */
 public class User implements java.io.Serializable {
 
-	private String id;
+	private Integer id;
 	private String password;
+	private String username;
 	private Set articles = new HashSet(0);
 
 	public User() {
 	}
-
-	public User(String id, String password) {
+	
+	public User(Integer id) {
 		this.id = id;
+	}
+	
+	public User(String password) {
 		this.password = password;
 	}
 
-	public User(String id, String password, Set articles) {
-		this.id = id;
+	public User(String password, String username, Set articles) {
 		this.password = password;
+		this.username = username;
 		this.articles = articles;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -42,6 +46,14 @@ public class User implements java.io.Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public Set getArticles() {

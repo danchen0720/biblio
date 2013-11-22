@@ -9,5 +9,7 @@
 		<value>biblio</value>
 	</preference>
 	-->
-	
+	<listener>
+        <listener-class>com.danchen.biblio.misc.OpenSessionInViewListener</listener-class>
+    </listener>
 </zk>

@@ -1,5 +1,6 @@
 package com.danchen.biblio.misc;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -18,7 +19,9 @@ public class HibernateUtil {
             throw new ExceptionInInitializerError(ex);
         }
     }
-
+    public static Session currentSession(){
+    	return getSessionFactory().getCurrentSession();
+    }
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }

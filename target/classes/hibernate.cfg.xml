@@ -7,8 +7,9 @@
   <property name="hibernate.connection.url">jdbc:hsqldb:hsql://localhost/biblio</property>
   <property name="hibernate.connection.username">sa</property>
   <property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
-  <mapping class="com.danchen.biblio.model.User" resource="com/danchen/biblio/model/User.hbm.xml"/>
-  <mapping class="com.danchen.biblio.model.Tag" resource="com/danchen/biblio/model/Tag.hbm.xml"/>
-  <mapping class="com.danchen.biblio.model.Article" resource="com/danchen/biblio/model/Article.hbm.xml"/>
+  <property name="current_session_context_class">thread</property>
+  <mapping class="com.danchen.biblio.hibernate.bean.User" resource="com/danchen/biblio/hibernate/bean/User.hbm.xml"/>
+  <mapping class="com.danchen.biblio.hibernate.bean.Tag" resource="com/danchen/biblio/hibernate/bean/Tag.hbm.xml"/>
+  <mapping class="com.danchen.biblio.hibernate.bean.Article" resource="com/danchen/biblio/hibernate/bean/Article.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>
