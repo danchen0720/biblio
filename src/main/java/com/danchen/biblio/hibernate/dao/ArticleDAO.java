@@ -61,6 +61,13 @@ public class ArticleDAO {
 		return result;
 	}
 	
+	public Article findOne(int articleId){
+		Query query = session.createQuery("from Article as art where art.id=:articleId");
+		query.setInteger("articleId", articleId);
+		Article result = (Article) query.uniqueResult();
+		return result;
+	}
+	
 	public List<Article> getByUser(int userId){
 		Query query = session.createQuery("from Article as art where art.User=:userId");
 		query.setInteger("userId", userId);

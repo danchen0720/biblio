@@ -1,6 +1,6 @@
 package com.danchen.biblio.hibernate.bean;
 
-// Generated Nov 22, 2013 12:31:25 PM by Hibernate Tools 3.4.0.CR1
+// Generated Nov 22, 2013 6:45:27 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,11 +17,7 @@ public class User implements java.io.Serializable {
 
 	public User() {
 	}
-	
-	public User(Integer id) {
-		this.id = id;
-	}
-	
+
 	public User(String password) {
 		this.password = password;
 	}
