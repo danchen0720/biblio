@@ -51,6 +51,10 @@ public class ArticleDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Article> findAll() {
+		return session.createQuery("from Article as art where art.id <> 0").list();
+	}
+	
+	public List<Article> getTree() {
 		return session.createQuery("from Article").list();
 	}
 	

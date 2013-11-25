@@ -1,8 +1,9 @@
 package com.danchen.biblio.hibernate.dao;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.danchen.biblio.hibernate.bean.Article;
@@ -41,8 +42,22 @@ public class TagDAO {
 		return newTag;
 	}
 	
+	public List<Article> getOneArticle(int id) {
+		List<Article> arts = null;
+	
+		Tag tag = (Tag) session.createQuery("from Tag as t where t.id=:id").setInteger("id", id).uniqueResult();
+		if(tag != null)
+			arts = new ArrayList<Article>(tag.getArticles());
+		return arts;
+	}
+
+	public List<Tag> findOne(int id) {
+		Query query = session.createQuery("from Tag as t where t.id=:id");
+		query.setInteger("id", id);
+		return query.list();
+	}
 	@SuppressWarnings("unchecked")
-	public List<Tag> findAll() {
-		return session.createQuery("from Tag").list();
+	public List<Tag> findAll() { 
+		return session.createQuery("from Tag as t").setMaxResults(10).list();
 	}
 }

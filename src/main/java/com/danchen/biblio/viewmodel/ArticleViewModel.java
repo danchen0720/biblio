@@ -2,29 +2,29 @@ package com.danchen.biblio.viewmodel;
 
 import java.util.List;
 
-import com.danchen.biblio.hibernate.bean.Tag;
-import com.danchen.biblio.hibernate.dao.TagDAO;
+import com.danchen.biblio.hibernate.bean.Article;
+import com.danchen.biblio.hibernate.dao.ArticleDAO;
 
 public class ArticleViewModel {
-	private TagDAO tagdao = new TagDAO();
-	private List<Tag> tagList;
-	private Tag selectedTag;
+	private ArticleDAO artDao = new ArticleDAO();
+	private List<Article> artList;
+	private Article article;
 	
-	public List<Tag> getTagList() {
-		return tagList;
+	public List<Article> getArtList() {
+		return artList;
 	}
-	public void setTagList(List<Tag> tagList) {
-		this.tagList = tagList;
+	public void setArtList(List<Article> artList) {
+		this.artList = artList;
 	}
-	
-	public Tag getSelectedTag() {
-		return selectedTag;
+
+	public Article getArticle() {
+		return article;
 	}
-	public void setSelectedTag(Tag selectedTag) {
-		this.selectedTag = selectedTag;
+	public void setArticle(Article article) {
+		this.article = article;
 	}
 
 	public ArticleViewModel() {
-		tagList = tagdao.findAll();
+		artList = artDao.findAll();
 	}
 }

@@ -1,6 +1,7 @@
 package com.danchen.biblio.test;
 
 import java.util.Date;
+import java.util.Iterator;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,15 +20,22 @@ public class TestDAO {
 		
 		ArticleDAO artDao = new ArticleDAO();
 //		Article newArticle = new Article();
-//		User user = new User(0);
+//		User user = new User(1);
 //		newArticle.setUser(user);
 //		newArticle.setTitle("test");
 //		newArticle.setContent("nono");
-//		newArticle.setParent(0);
+//		newArticle.setParent(3);
 //		newArticle.setState(0);
 //		newArticle.setTime(new Date());
 //		artDao.insert(newArticle);
-		System.out.println(artDao.findOne(2).getChildren());
+		
+		//Test getChildren()
+//		Iterator itr = artDao.findOne(3).getChildren().iterator();
+//		while (itr.hasNext()) {
+//			Article bean = (Article)itr.next();
+//			System.out.println(bean.getId());
+//		}
+		
 		tx.commit();
 		HibernateUtil.closeSessionFactory();
 	}

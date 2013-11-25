@@ -18,8 +18,8 @@ public class User implements java.io.Serializable {
 	public User() {
 	}
 
-	public User(String password) {
-		this.password = password;
+	public User(Integer id) {
+		this.id = id;
 	}
 
 	public User(String password, String username, Set articles) {

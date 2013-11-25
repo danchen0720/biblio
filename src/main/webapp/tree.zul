@@ -1,0 +1,20 @@
+<?page title="treeview" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<zscript><![CDATA[
+		import com.danchen.biblio.hibernate.dao.TagDAO;
+		
+	    TagDAO tagDao = new TagDAO();
+	    int index = fourmvm.getSelectedIndex();
+	   	List list = tagDao.getOneArticle(1);
+        TreeModel tm = new com.danchen.biblio.test.TestTreeModel(list);
+    ]]></zscript>
+	<tree id="tree" model="${tm}">
+		<template name="model">
+        	<treeitem>
+       			<treerow>
+       				<treecell label="${each.title}"/>
+        		</treerow>
+        	</treeitem>
+   		</template>
+	</tree>
+</zk>

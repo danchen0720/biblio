@@ -2,7 +2,6 @@ package com.danchen.biblio.hibernate.bean;
 
 // Generated Nov 22, 2013 6:45:27 PM by Hibernate Tools 3.4.0.CR1
 
-import java.sql.Clob;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,11 +15,12 @@ public class Article implements java.io.Serializable {
 	private Article article;
 	private User user;
 	private Date time;
-	private int state;
+	private Integer parent;
+	private Integer state;
 	private String content;
 	private String title;
-	private Set tags = new HashSet(0);
-	private Set children = new HashSet(0);
+	private Set<Tag> tags = new HashSet(0);
+	private Set<Article> children = new HashSet(0);
 
 	public Article() {
 	}
@@ -31,9 +31,10 @@ public class Article implements java.io.Serializable {
 		this.state = state;
 	}
 
-	public Article(Article article, User user, Date time, int state,
+	public Article(Article article,Integer parent, User user, Date time, int state,
 			String content, String title, Set tags, Set articles) {
 		this.article = article;
+		this.parent = parent;
 		this.user = user;
 		this.time = time;
 		this.state = state;
@@ -41,6 +42,14 @@ public class Article implements java.io.Serializable {
 		this.title = title;
 		this.tags = tags;
 		this.children = articles;
+	}
+
+	public Integer getParent() {
+		return parent;
+	}
+
+	public void setParent(Integer parent) {
+		this.parent = parent;
 	}
 
 	public Integer getId() {
@@ -75,11 +84,11 @@ public class Article implements java.io.Serializable {
 		this.time = time;
 	}
 
-	public int getState() {
+	public Integer getState() {
 		return this.state;
 	}
 
-	public void setState(int state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 
