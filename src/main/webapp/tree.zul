@@ -1,10 +1,9 @@
 <zk>
 	<zscript><![CDATA[
 		import com.danchen.biblio.service.TagService;
-		TagService tagServ = new TagService();
-	   
-	   	List list = tagServ.getArticleTreeByTag(0);
 		
+		TagService tagServ = new TagService();
+	   	List list = tagServ.getArticleTreeByTag(fourmvm.selectedTagId);
         TreeModel tm = new com.danchen.biblio.test.TestTreeModel(list);
     ]]></zscript>
 	<tree id="tree" model="${tm}" width="1024px">

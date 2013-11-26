@@ -12,22 +12,30 @@ import com.danchen.biblio.hibernate.bean.Article;
 public class TestTreeModel extends AbstractTreeModel<Object> {
 	final Logger logger = LoggerFactory.getLogger(TestTreeModel.class);
 	private ArrayList<Article> _tree = null;
-
+	private int _treeSize;
+	
 	public TestTreeModel(ArrayList<Article> tree) {
 		super(tree.get(0));
 		_tree = tree;
+		_treeSize = _tree.size();
 	}
 
 	public Article getChild(Object parent, int index) {
-		if(((Article) parent).getId() == 0 && index == 0)
-			return _tree.get(index+1);
+		if(_tree.size() > 1){
+			return _tree.remove(1);
+		}else {
+			//clear up the list
 			
-		return _tree.get(index);
-//		Object[] children = ((Article) parent).getChildren().toArray();
-//		return (Article) children[index];
+			Object[] children = ((Article) parent).getChildren().toArray();
+			return (Article) children[index];
+		}
 	}
 
 	public int getChildCount(Object parent) {
+		//return doesn't have root size
+		if(_tree.size() >= 1)
+			return _treeSize-1;
+			
 		return ((Article) parent).getChildren().size();
 	}
 

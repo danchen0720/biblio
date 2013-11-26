@@ -1,9 +1,9 @@
 <zk>
 	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('fourmvm') @init('com.danchen.biblio.viewmodel.ForumViewModel')">
-		<include src="tree.zul" />
+		<include id="treeIn" src="tree.zul" />
 		<div width="900px"  children="@load(fourmvm.tags)">
 			<template name="children">
-	   			<button style="float:left;" label="@load(each.name)" onClick="@command('select',btn=self,id=each.id)"/>
+	   			<button style="float:left;" label="@load(each.name)" onClick="@command('select',btn=self,tagId=each.id)"/>
 	        </template>
 		</div>
 	</div>

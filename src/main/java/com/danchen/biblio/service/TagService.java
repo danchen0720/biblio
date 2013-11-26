@@ -60,7 +60,7 @@ public class TagService {
 
 			//add root
 			artTree.add(0,artDao.findOne(0));
-			System.out.println(artTree.size());
+			System.out.println(artTree);
 			return artTree;
 		}
 		return null;
