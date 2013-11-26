@@ -1,5 +1,4 @@
-<zk>	
- 	<!-- 											
+<zk>									
 	<div width="600px" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('artvm') @init('com.danchen.biblio.viewmodel.ArticleViewModel')">
 		<listbox model="@bind(artvm.artList)">
@@ -15,16 +14,7 @@
         TreeModel tm = new com.danchen.biblio.test.TestTreeModel(
         		new com.danchen.biblio.hibernate.dao.ArticleDAO().findAll());
     ]]></zscript>
-	<tree id="tree" model="${tm}">
-		<template name="model">
-        	<treeitem>
-       			<treerow>
-       				<treecell label="${each.title}"/>
-        		</treerow>
-        	</treeitem>
-   		</template>
-	</tree>
-	 -->
+
 	<tabbox id="tb" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('fourmvm') @init('com.danchen.biblio.viewmodel.ForumViewModel')" selectedIndex="@save(fourmvm.selectedIndex)">
 	    <tabs children="@load(fourmvm.tags)">
@@ -34,7 +24,7 @@
 	    </tabs>
 	    <tabpanels>
 	        <tabpanel>
-	        	<include src="tree.zul" />
+	        	     <include src="tree.zul" />
 	        </tabpanel>
 	    </tabpanels>
 	</tabbox>

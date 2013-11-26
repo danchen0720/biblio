@@ -9,13 +9,9 @@ import com.danchen.biblio.hibernate.bean.User;
 import com.danchen.biblio.misc.HibernateUtil;
 
 public class UserDAO {
-	private Session session;
-	
-	public UserDAO() {
-		this.session = HibernateUtil.currentSession();
-	}
 	
 	public User update(String username, String password, Integer id) {
+		Session session = HibernateUtil.currentSession();
 		User bean = (User)session.get(User.class, id);
 		if (bean != null) {
 			bean.setUsername(username);
@@ -27,6 +23,7 @@ public class UserDAO {
 	}
 	
 	public boolean delete(int id) {
+		Session session = HibernateUtil.currentSession();
 		User bean = (User)session.get(User.class, id);
 		if(bean != null){
 			session.delete(bean);
@@ -36,6 +33,7 @@ public class UserDAO {
 	}
 	
 	public User save(User newUser) {
+		Session session = HibernateUtil.currentSession();
 		session.save(newUser);
 		session.flush();
 		return newUser;
@@ -43,6 +41,7 @@ public class UserDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<User> findAll() {
+		Session session = HibernateUtil.currentSession();
 		return session.createQuery("from User").list(); 
 	}
 }

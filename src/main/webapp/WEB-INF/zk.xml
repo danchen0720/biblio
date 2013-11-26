@@ -8,6 +8,10 @@
 		<name>org.zkoss.zk.ui.WebApp.name</name>
 		<value>biblio</value>
 	</preference>
+	
+    <listener>
+        <listener-class>com.danchen.biblio.misc.LoginListener</listener-class>
+    </listener>
 	-->
 	<listener>
         <listener-class>com.danchen.biblio.misc.OpenSessionInViewListener</listener-class>

@@ -2,13 +2,14 @@ package com.danchen.biblio.misc;
 
 import java.util.List;
 
-import org.zkoss.util.logging.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.util.ExecutionCleanup;
 import org.zkoss.zk.ui.util.ExecutionInit;
 
 public class OpenSessionInViewListener implements ExecutionInit, ExecutionCleanup {
-    private static final Log log = Log.lookup(OpenSessionInViewListener.class);
+    private static final Logger log = LoggerFactory.getLogger(OpenSessionInViewListener.class);
  
     public void init(Execution exec, Execution parent) {
         if (parent == null) { //the root execution of a servlet request

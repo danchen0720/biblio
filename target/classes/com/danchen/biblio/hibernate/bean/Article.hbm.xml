@@ -26,7 +26,7 @@
         <property name="title" type="string">
             <column name="TITLE" length="100" />
         </property>
-        <set name="tags" table="TAGDETAIL" inverse="false" lazy="true" fetch="select">
+        <set name="tags" table="TAGDETAIL" inverse="false" lazy="false" fetch="select">
             <key>
                 <column name="ARTICLE" not-null="true" />
             </key>
@@ -34,7 +34,7 @@
                 <column name="TAG" not-null="true" />
             </many-to-many>
         </set>
-        <set name="children" table="ARTICLE" inverse="true" lazy="false" fetch="select">
+        <set name="children" table="ARTICLE" inverse="true" lazy="false" fetch="select" order-by="time">
             <key>
                 <column name="PARENT" />
             </key>

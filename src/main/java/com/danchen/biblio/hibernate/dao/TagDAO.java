@@ -11,13 +11,9 @@ import com.danchen.biblio.hibernate.bean.Tag;
 import com.danchen.biblio.misc.HibernateUtil;
 
 public class TagDAO {
-	private Session session;
-	
-	public TagDAO() {
-		this.session = HibernateUtil.currentSession();
-	}
-	
+
 	public Tag update(String name,Integer id) {
+		Session session = HibernateUtil.currentSession();
 		Tag bean = (Tag) session.get(Tag.class, id);
 		if(bean != null){
 			bean.setName(name);
@@ -28,6 +24,7 @@ public class TagDAO {
 	}
 	
 	public boolean delete(int id) {
+		Session session = HibernateUtil.currentSession();
 		Tag bean = (Tag)session.get(Tag.class, id);
 		if(bean != null){
 			session.delete(bean);
@@ -37,27 +34,21 @@ public class TagDAO {
 	}
 	
 	public Tag insert(Tag newTag) {
+		Session session = HibernateUtil.currentSession();
 		session.save(newTag);
 		session.flush();
 		return newTag;
 	}
 	
-	public List<Article> getOneArticle(int id) {
-		List<Article> arts = null;
-	
-		Tag tag = (Tag) session.createQuery("from Tag as t where t.id=:id").setInteger("id", id).uniqueResult();
-		if(tag != null)
-			arts = new ArrayList<Article>(tag.getArticles());
-		return arts;
-	}
-
-	public List<Tag> findOne(int id) {
+	public Tag findOne(int id) {
+		Session session = HibernateUtil.currentSession();
 		Query query = session.createQuery("from Tag as t where t.id=:id");
 		query.setInteger("id", id);
-		return query.list();
+		return (Tag) query.uniqueResult();
 	}
 	@SuppressWarnings("unchecked")
-	public List<Tag> findAll() { 
-		return session.createQuery("from Tag as t").setMaxResults(10).list();
+	public List<Tag> findAll() {
+		Session session = HibernateUtil.currentSession();
+		return session.createQuery("from Tag as t").list();
 	}
 }

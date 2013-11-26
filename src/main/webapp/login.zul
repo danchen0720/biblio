@@ -1,0 +1,25 @@
+<?page title="login" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="login" width="400px" border="normal">
+	<grid hflex="1">
+		<columns>
+           	<column hflex="min" align="center"/>
+           	<column hflex="min"/>
+   	 	</columns>
+   	 	<rows>
+   	 		<row>
+   	 			username：<textbox id="namebox" hflex="1"/>
+   	 		</row>
+   	 		<row>
+   	 			password：<textbox id="pwdbox" hflex="1" type="password"/>
+   	 		</row>
+   	 	</rows>
+		<foot>
+			<footer align="right"/>
+ 			<footer align="right">
+ 				<button label="Login"/>
+ 			</footer>	
+ 		</foot>
+	</grid>
+</window>
+</zk>

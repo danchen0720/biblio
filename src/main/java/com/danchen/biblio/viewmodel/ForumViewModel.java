@@ -2,18 +2,32 @@ package com.danchen.biblio.viewmodel;
 
 import java.util.List;
 
+import org.zkoss.bind.annotation.BindingParam;
+import org.zkoss.bind.annotation.Command;
+import org.zkoss.zul.Button;
+
 import com.danchen.biblio.hibernate.bean.Tag;
-import com.danchen.biblio.hibernate.dao.TagDAO;
+import com.danchen.biblio.service.TagService;
 
 public class ForumViewModel {
-	private int selectedIndex;
-	private TagDAO tagDao = new TagDAO();
+	private TagService tagServ = new TagService();
 	private List<Tag> tags;
-	private Tag tag;
+	private Button selectedItem;
+	private int tagId;
+	
+	@Command("select")
+	public void select(@BindingParam("btn")Button btn, @BindingParam("id")String id) {
+		if(selectedItem != null)
+			selectedItem.setDisabled(false);
+		
+		//update selectedBtn
+		selectedItem = btn;
+		selectedItem.setDisabled(true);
+	}
 	
 	//constructor
 	public ForumViewModel() {
-		tags = tagDao.findAll();
+		tags = tagServ.getAll();
 	}
 	
 	// getter and setter
@@ -24,17 +38,4 @@ public class ForumViewModel {
 		this.tags = tags;
 	}
 	
-	public Tag getTag() {
-		return tag;
-	}
-	public void setTag(Tag tag) {
-		this.tag = tag;
-	}
-	
-	public int getSelectedIndex() {
-		return selectedIndex;
-	}
-	public void setSelectedIndex(int selectedIndex) {
-		this.selectedIndex = selectedIndex;
-	}
 }

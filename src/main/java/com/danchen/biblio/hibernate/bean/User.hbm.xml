@@ -14,7 +14,7 @@
         <property name="username" type="string">
             <column name="USERNAME" length="50" />
         </property>
-        <set name="articles" table="ARTICLE" inverse="true" lazy="true" fetch="select">
+        <set name="articles" table="ARTICLE" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="USER" not-null="true" />
             </key>

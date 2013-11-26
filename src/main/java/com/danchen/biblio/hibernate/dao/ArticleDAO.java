@@ -12,14 +12,10 @@ import com.danchen.biblio.hibernate.bean.Tag;
 import com.danchen.biblio.misc.HibernateUtil;
 
 public class ArticleDAO {
-	private Session session;
-	
-	public ArticleDAO() {
-		this.session = HibernateUtil.currentSession();
-	}
 	
 	public Article update(Date time, Integer state, String content,
 			String title, Set<Tag> tags, Integer id) {
+		Session session = HibernateUtil.currentSession();
 		Article bean = (Article)session.get(Article.class, id);
 		if (bean != null) {
 			bean.setTime(time);
@@ -35,6 +31,7 @@ public class ArticleDAO {
 	}
 
 	public boolean delete(int id) {
+		Session session = HibernateUtil.currentSession();
 		Article bean = (Article)session.get(Article.class, id);
 		if(bean != null){
 			session.delete(bean);
@@ -44,6 +41,7 @@ public class ArticleDAO {
 	}
 
 	public Article insert(Article newArticle) {
+		Session session = HibernateUtil.currentSession();
 		session.save(newArticle);
 		session.flush();
 		return newArticle;
@@ -51,14 +49,17 @@ public class ArticleDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Article> findAll() {
+		Session session = HibernateUtil.currentSession();
 		return session.createQuery("from Article as art where art.id <> 0").list();
 	}
 	
 	public List<Article> getTree() {
+		Session session = HibernateUtil.currentSession();
 		return session.createQuery("from Article").list();
 	}
 	
 	public List<Article> getByParent(int parentId) {
+		Session session = HibernateUtil.currentSession();
 		Query query = session.createQuery("from Article as art where art.parent=:parentId");
 		query.setInteger("parentId", parentId);
 		List<Article> result = query.list();
@@ -66,6 +67,7 @@ public class ArticleDAO {
 	}
 	
 	public Article findOne(int articleId){
+		Session session = HibernateUtil.currentSession();
 		Query query = session.createQuery("from Article as art where art.id=:articleId");
 		query.setInteger("articleId", articleId);
 		Article result = (Article) query.uniqueResult();
@@ -73,6 +75,7 @@ public class ArticleDAO {
 	}
 	
 	public List<Article> getByUser(int userId){
+		Session session = HibernateUtil.currentSession();
 		Query query = session.createQuery("from Article as art where art.User=:userId");
 		query.setInteger("userId", userId);
 		List<Article> result = query.list();
