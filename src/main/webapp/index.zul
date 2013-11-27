@@ -1,3 +1,19 @@
-<zk>									
-	
+<zk>
+	<hbox width="900px">								
+		<listbox>
+			<listhead>
+				<listheader label="new topics"/>
+			</listhead>
+		</listbox>
+		<listbox>
+			<listhead>
+				<listheader label="last posts"/>
+			</listhead>
+		</listbox>
+		<listbox>
+			<listhead>
+				<listheader label="personal"/>
+			</listhead>
+		</listbox>
+	</hbox>	
 </zk>

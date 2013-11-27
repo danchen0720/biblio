@@ -12,6 +12,11 @@
 			margin-left : 1px;
 		}
 	</style>
+	<div>
+		<button label="treeview"/>
+		<button label="liseview"/>
+		<button label="addNewTopic"/>
+	</div>
 	<div style="background-color: #f7f7f7;" width="900px" apply="org.zkoss.bind.BindComposer" viewModel="@id('fourmvm') @init('com.danchen.biblio.viewmodel.ForumViewModel')">
 		<div sclass="tag-btn">
 			<button style="float:left;" label="All" onClick="@command('select',btn=self,tagId=-1)"/>
