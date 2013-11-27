@@ -13,6 +13,9 @@
         <listener-class>com.danchen.biblio.misc.LoginListener</listener-class>
     </listener>
 	-->
+	 <language-config>
+        <addon-uri>/WEB-INF/ckez-bind-addon.xml</addon-uri>
+    </language-config>
 	<listener>
         <listener-class>com.danchen.biblio.misc.OpenSessionInViewListener</listener-class>
     </listener>

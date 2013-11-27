@@ -1,0 +1,64 @@
+<?page title="article" contentType="text/html;charset=UTF-8"?>
+
+<zk xmlns:w="http://www.zkoss.org/2005/zk/client">
+	<style>
+		.z-grid{
+			border : 0px;
+		}
+		.z-columns{
+			display :none;
+		}
+		.z-row{
+			height : 300px;
+		}
+		.z-row .z-row-inner, .z-row .z-cell{
+			border-bottom : 2px solid white;
+			border-right : 0px;
+			background-color : #f7f7f7;
+		}
+		.z-row .z-row-inner:last-child .z-row-content{
+			background-color : white;
+			width : 99%;
+			height : 280px;
+		}
+		.z-row:last-child .z-row-inner{
+			border-bottom : 0px;
+		}
+		.z-row:hover>.z-row-inner, .z-grid-odd>.z-row-inner, .z-row:hover>.z-cell{
+			background : none;
+			background-color : #f7f7f7;
+		}
+
+	</style>
+	<div>
+		<grid hflex="1">
+			<auxhead>
+	            <auxheader label="Title" colspan="2" rowspan="1" />
+	        </auxhead>
+			<columns>
+				<column hflex="1"></column>
+				<column hflex="5"></column>
+			</columns>
+			<rows>
+				<row>
+					<div sclass="test">user</div>
+					<div>content</div>
+				</row>
+				<row>
+					<cell colspan="2">
+						<ckeditor>
+							<attribute w:name="bind_">
+								function () {
+								 	CKEDITOR.config.toolbar_Simple = [ [ 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', '-', 'About' ] ];
+									CKEDITOR.config.toolbar = 'Simple';
+									this.$bind_();
+								}
+							</attribute>
+						</ckeditor>
+						<button label="reply"/>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</div>
+</zk>

@@ -46,24 +46,23 @@ public class ArticleDAO {
 		session.flush();
 		return newArticle;
 	}
-
-	@SuppressWarnings("unchecked")
-	public List<Article> findAll() {
-		Session session = HibernateUtil.currentSession();
-		return session.createQuery("from Article as art where art.id <> 0").list();
-	}
-	
-	public List<Article> getTree() {
-		Session session = HibernateUtil.currentSession();
-		return session.createQuery("from Article").list();
-	}
 	
 	public List<Article> getByParent(int parentId) {
 		Session session = HibernateUtil.currentSession();
 		Query query = session.createQuery("from Article as art where art.parent=:parentId");
 		query.setInteger("parentId", parentId);
-		List<Article> result = query.list();
-		return result;
+		return query.list();
+	}
+	
+	public List<Article> findMainArts(){
+		Session session = HibernateUtil.currentSession();
+		return session.createQuery("from Article as art where art.parent=0 ORDER BY art.time DESC").list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Article> findAll() {
+		Session session = HibernateUtil.currentSession();
+		return session.createQuery("from Article as art where art.id <> 0").list();
 	}
 	
 	public Article findOne(int articleId){

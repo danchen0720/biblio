@@ -43,6 +43,11 @@
 	</pluginRepositories>
 	<dependencies>
 		<dependency>
+			<groupId>org.zkoss.zkforge</groupId>
+			<artifactId>ckez</artifactId>
+			<version>4.1.1.0</version>
+		</dependency>   
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>${servlet-api.version}</version>

@@ -1,11 +1,28 @@
 <zk>
-	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('fourmvm') @init('com.danchen.biblio.viewmodel.ForumViewModel')">
-		<include id="treeIn" src="tree.zul" />
-		<div width="900px"  children="@load(fourmvm.tags)">
+	<style>
+		.tag-btn>.z-button{
+			font-size : 16px;
+			border-radius : 0px;
+			line-height : 0px;
+			border : 1px solid #cccccc;
+    		margin-left : -1px;
+    		margin-bottom : -1px;
+		}
+		.tag-btn{
+			margin-left : 1px;
+		}
+	</style>
+	<div style="background-color: #f7f7f7;" width="900px" apply="org.zkoss.bind.BindComposer" viewModel="@id('fourmvm') @init('com.danchen.biblio.viewmodel.ForumViewModel')">
+		<div sclass="tag-btn">
+			<button style="float:left;" label="All" onClick="@command('select',btn=self,tagId=-1)"/>
+		</div>
+		<div sclass="tag-btn" children="@load(fourmvm.tags)">
 			<template name="children">
 	   			<button style="float:left;" label="@load(each.name)" onClick="@command('select',btn=self,tagId=each.id)"/>
 	        </template>
 		</div>
+		<div style="clear:left;">
+			<include id="treeIn" src="tree.zul" />
+		</div>
 	</div>
-
 </zk>

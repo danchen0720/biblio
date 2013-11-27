@@ -39,31 +39,18 @@ public class TagService {
 	}
 	
 	public List<Article> getArticleTreeByTag(int id) {
-		Tag tag = tagDao.findOne(id);
-		if(tag != null){
-			List<Article> artTree =  new ArrayList<Article>();
-			ArticleDAO artDao = new ArticleDAO();
+		List<Article> artTree =  new ArrayList<Article>();
+		ArticleDAO artDao = new ArticleDAO();
+	
+		if(id < 0) 
+			artTree.addAll(artDao.findMainArts());
+		else 
+			artTree.addAll(tagDao.findOne(id).getArticles());
 
-			artTree.addAll(tag.getArticles());
-			//sort 
-//			Collections.sort(artTree, new Comparator<Article>() {
-//				public int compare(Article o1, Article o2) {
-//					 if (o1.getTime().before(o2.getTime())) {
-//				            return -1;
-//				        } else if (o1.getTime().after(o2.getTime())) {
-//				            return 1;
-//				        } else {
-//				            return 0;
-//				        }    
-//				}
-//			});
-
-			//add root
-			artTree.add(0,artDao.findOne(0));
-			System.out.println(artTree);
-			return artTree;
-		}
-		return null;
+	
+		//add root	
+		artTree.add(0,artDao.findOne(0));
+		return artTree;
 	}
 	
 }

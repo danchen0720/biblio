@@ -1,16 +1,20 @@
 <zk>
-	<zscript><![CDATA[
-		import com.danchen.biblio.service.TagService;
-		
-		TagService tagServ = new TagService();
-	   	List list = tagServ.getArticleTreeByTag(fourmvm.selectedTagId);
-        TreeModel tm = new com.danchen.biblio.test.TestTreeModel(list);
-    ]]></zscript>
-	<tree id="tree" model="${tm}" width="1024px">
+    <style>
+    	.z-tree{
+    		border : 3px solid #cfcfcf;
+    		border-left : 0px;
+    		border-right : 0px;
+    		background-color : white;
+    	}
+    </style>
+	<tree id="artTreeView" model="@load(fourmvm.tm)">
+	    <treecols>
+	        <treecol label="Title"/>
+		</treecols>
 		<template name="model">
         	<treeitem>
        			<treerow>
-       				<treecell label="${each.title}"/>
+       				<treecell label="@load(each.title)" onClick="@command('clickTitle',articleId=each.id)"/>
         		</treerow>
         	</treeitem>
    		</template>

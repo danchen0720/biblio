@@ -1,0 +1,22 @@
+<?page title="addnew" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<style>
+		.z-columns{
+			display :none;
+		}
+	</style>
+	<grid>
+		<auxhead>
+            <auxheader label="Add New Article" colspan="2" rowspan="1" />
+        </auxhead>
+		<columns>
+			<column align="center" hflex="min"/>
+			<column />
+		</columns>
+		<rows>
+			<row>Title<textbox hflex="1"/></row>
+			<row>Content<ckeditor/></row>
+		</rows>
+	</grid>
+	
+</zk>
