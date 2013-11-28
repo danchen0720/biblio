@@ -1,0 +1,14 @@
+<?page title="personalpost" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<listbox width="100%">
+		<listhead>
+			<listheader label="Title" hflex="5"/>
+			<listheader align="center" label="Time" hflex="1"/>
+			<listheader align="center" label="modify" hflex="1"/>
+			<listheader align="center" label="delete" hflex="1"/>
+		</listhead>
+		<listitem>
+			
+		</listitem>
+	</listbox>
+</zk>

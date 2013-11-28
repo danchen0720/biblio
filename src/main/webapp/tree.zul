@@ -9,12 +9,14 @@
     </style>
 	<tree id="artTreeView" model="@load(fourmvm.tm)">
 	    <treecols>
-	        <treecol label="Title"/>
+	        <treecol label="Title" hflex="5"/>
+	         <treecol label="Time" hflex="1"/>
 		</treecols>
-		<template name="model">
+		<template name="model" var="art">
         	<treeitem>
        			<treerow>
-       				<treecell label="@load(each.title)" onClick="@command('clickTitle',articleId=each.id)"/>
+       				<treecell label="${art.title}" onClick="@command('clickArtTitle',articleId=art.id)"/>
+       				<treecell label="${art.time}"/>
         		</treerow>
         	</treeitem>
    		</template>

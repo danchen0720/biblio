@@ -72,8 +72,15 @@ public class ArticleDAO {
 		Article result = (Article) query.uniqueResult();
 		return result;
 	}
-	
-	public List<Article> getByUser(int userId){
+								
+	public List<Article> getArtFamily(int articleId) {
+		Session session = HibernateUtil.currentSession();
+		Query query = session.createQuery("from Article as art where art.id=:articleId or art.parent=:articleId");
+		query.setInteger("articleId", articleId);
+		List<Article> result = query.list();
+		return result;
+	}
+	public List<Article> getByUser(int userId) {
 		Session session = HibernateUtil.currentSession();
 		Query query = session.createQuery("from Article as art where art.User=:userId");
 		query.setInteger("userId", userId);

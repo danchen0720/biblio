@@ -1,6 +1,4 @@
-<?page title="article" contentType="text/html;charset=UTF-8"?>
-
-<zk xmlns:w="http://www.zkoss.org/2005/zk/client">
+<zk>
 	<style>
 		.z-grid{
 			border : 0px;
@@ -28,24 +26,35 @@
 			background : none;
 			background-color : #f7f7f7;
 		}
-
+		.reply-title{
+			font-family: Arial,Sans-serif;
+			font-size: 12px;
+			font-weight: bold;
+			color: #636363;
+		}
 	</style>
-	<div>
-		<grid hflex="1">
+	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('artvm') @init('com.danchen.biblio.viewmodel.ArticleViewModel')">
+
+		<grid model="@load(artvm.arts)" hflex="1">
 			<auxhead>
 	            <auxheader label="Title" colspan="2" rowspan="1" />
 	        </auxhead>
 			<columns>
-				<column hflex="1"></column>
-				<column hflex="5"></column>
+				<column hflex="1"/>
+				<column hflex="5"/>
 			</columns>
 			<rows>
-				<row>
-					<div sclass="test">user</div>
-					<div>content</div>
-				</row>
-				<row>
-					<cell colspan="2">
+				<template name="model" var="art">
+					 <row>
+						<div sclass="test">user</div>
+						<div>${art.content}</div>
+					</row>
+				</template>
+			</rows>
+			<!-- 
+				<foot>
+					<footer span="2">
+						<label sclass="reply-title">Leave a Reply</label>
 						<ckeditor>
 							<attribute w:name="bind_">
 								function () {
@@ -55,10 +64,10 @@
 								}
 							</attribute>
 						</ckeditor>
-						<button label="reply"/>
-					</cell>
-				</row>
-			</rows>
+						<button style="float:right; margin-top:5px;" label="Post Comment"></button>
+					</footer>
+				</foot>
+			 -->
 		</grid>
 	</div>
 </zk>

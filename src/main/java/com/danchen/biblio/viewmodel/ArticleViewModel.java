@@ -2,29 +2,25 @@ package com.danchen.biblio.viewmodel;
 
 import java.util.List;
 
+import org.zkoss.zk.ui.Executions;
+
 import com.danchen.biblio.hibernate.bean.Article;
-import com.danchen.biblio.hibernate.dao.ArticleDAO;
+import com.danchen.biblio.service.ArticleService;
 
 public class ArticleViewModel {
-	private ArticleDAO artDao = new ArticleDAO();
-	private List<Article> artList;
-	private Article article;
-	
-	public List<Article> getArtList() {
-		return artList;
-	}
-	public void setArtList(List<Article> artList) {
-		this.artList = artList;
-	}
-
-	public Article getArticle() {
-		return article;
-	}
-	public void setArticle(Article article) {
-		this.article = article;
-	}
-
+	private List<Article> arts;
+	private ArticleService artServ = new ArticleService();
 	public ArticleViewModel() {
-		artList = artDao.findAll();
+		System.out.println("ArticleVM");
 	}
+
+	public List<Article> getArts() {
+		String articleId = (String) Executions.getCurrent().getAttribute("articleId");   
+		System.out.println(articleId);
+		return artServ.getArtsById(articleId);
+	}
+	public void setArts(List<Article> arts) {
+		this.arts = arts;
+	}
+	
 }

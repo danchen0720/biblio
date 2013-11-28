@@ -1,0 +1,25 @@
+<?page title="test" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<style>
+		.z-listbox{
+    		border : 3px solid #cfcfcf;
+    		border-left : 0px;
+    		border-right : 0px;
+    		background-color : white;
+    	}
+	</style>
+	<div>
+		<listbox model="@load(fourmvm.arts)">
+			<listhead>
+				<listheader label="Title" hflex="5"/>
+				<listheader label="Time" hflex="1"/>
+			</listhead>
+			<template name="model" var="art">
+				<listitem>
+					<listcell label="${art.title}" onClick="@command('clickArtTitle',articleId=art.id)"/>
+					<listcell label="${art.time}"/>
+				</listitem>
+			</template>
+		</listbox>
+	</div>
+</zk>

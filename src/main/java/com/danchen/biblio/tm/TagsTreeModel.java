@@ -1,4 +1,4 @@
-package com.danchen.biblio.test;
+package com.danchen.biblio.tm;
 
 import java.util.List;
 
@@ -8,15 +8,14 @@ import org.zkoss.zul.AbstractTreeModel;
 
 import com.danchen.biblio.hibernate.bean.Article;
 
-public class TestTreeModel extends AbstractTreeModel<Object> {
-	final Logger logger = LoggerFactory.getLogger(TestTreeModel.class);
+public class TagsTreeModel extends AbstractTreeModel<Object> {
+	final Logger logger = LoggerFactory.getLogger(TagsTreeModel.class);
 	private List<Article> _tree = null;
 	private int _treeSize;
 	private Article _root;
 	
-	public TestTreeModel(List<Article> tree) {
+	public TagsTreeModel(List<Article> tree) {
 		super(tree.get(0));
-		
 		_root = tree.get(0);
 		_tree = tree;
 		_treeSize = _tree.size();

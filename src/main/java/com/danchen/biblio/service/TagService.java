@@ -41,16 +41,25 @@ public class TagService {
 	public List<Article> getArticleTreeByTag(int id) {
 		List<Article> artTree =  new ArrayList<Article>();
 		ArticleDAO artDao = new ArticleDAO();
-	
 		if(id < 0) 
 			artTree.addAll(artDao.findMainArts());
 		else 
 			artTree.addAll(tagDao.findOne(id).getArticles());
 
-	
 		//add root	
 		artTree.add(0,artDao.findOne(0));
 		return artTree;
+	}
+	public List<Article> getArtsByTag(int id) {
+		List<Article> arts = null;
+		ArticleDAO artDao = new ArticleDAO();
+		if(id < 0) 
+			arts = artDao.findMainArts();
+		else {
+			arts =  new ArrayList<Article>();
+			arts.addAll(tagDao.findOne(id).getArticles());
+		}
+		return arts;
 	}
 	
 }
