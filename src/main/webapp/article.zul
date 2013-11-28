@@ -32,13 +32,13 @@
 			font-weight: bold;
 			color: #636363;
 		}
+		.z-grid-footer{
+			border:0px;
+		}
 	</style>
 	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('artvm') @init('com.danchen.biblio.viewmodel.ArticleViewModel')">
 
 		<grid model="@load(artvm.arts)" hflex="1">
-			<auxhead>
-	            <auxheader label="Title" colspan="2" rowspan="1" />
-	        </auxhead>
 			<columns>
 				<column hflex="1"/>
 				<column hflex="5"/>
@@ -46,27 +46,52 @@
 			<rows>
 				<template name="model" var="art">
 					 <row>
-						<div sclass="test">user</div>
-						<div>${art.content}</div>
+					 	<cell colspan="2">
+					 		<grid width="100%">
+								<auxhead>
+						            <auxheader  hflex="5">
+						            	<label value="@load(art.time) @converter('formatedDate', format='yyyy/MM/dd HH:mm')"></label>
+						            </auxheader>
+						            <auxheader hflex="1">
+						            	<label>${art.title}</label>
+						            </auxheader>
+						        </auxhead>
+						        <columns>
+									<column hflex="1"/>
+									<column hflex="5"/>
+								</columns>
+								<rows>
+									 <row>
+										<div sclass="test">user</div>
+										<div>${art.content}</div>
+									</row>
+								</rows>
+								<foot>
+									<footer span="2">
+										<button style="float:right; margin-top:5px;" label="reply"></button>
+									</footer>
+								</foot>
+						     </grid>
+						</cell>
 					</row>
 				</template>
 			</rows>
 			<!-- 
-				<foot>
-					<footer span="2">
-						<label sclass="reply-title">Leave a Reply</label>
-						<ckeditor>
-							<attribute w:name="bind_">
-								function () {
-								 	CKEDITOR.config.toolbar_Simple = [ [ 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', '-', 'About' ] ];
-									CKEDITOR.config.toolbar = 'Simple';
-									this.$bind_();
-								}
-							</attribute>
-						</ckeditor>
-						<button style="float:right; margin-top:5px;" label="Post Comment"></button>
-					</footer>
-				</foot>
+			<foot>
+				<footer span="2"  xmlns:w="http://www.zkoss.org/2005/zk/client">
+					<label sclass="reply-title">Leave a Reply</label>
+					<ckeditor>
+						<attribute w:name="bind_">
+							function () {
+							 	CKEDITOR.config.toolbar_Simple = [ [ 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', '-', 'About' ] ];
+								CKEDITOR.config.toolbar = 'Simple';
+								this.$bind_();
+							}
+						</attribute>
+					</ckeditor>
+					<button style="float:right; margin-top:5px;" label="Post Comment"></button>
+				</footer>
+			</foot>
 			 -->
 		</grid>
 	</div>

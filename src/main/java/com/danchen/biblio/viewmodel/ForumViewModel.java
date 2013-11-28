@@ -28,9 +28,10 @@ import com.danchen.biblio.tm.TagsTreeModel;
 public class ForumViewModel {
 	private TagService tagServ = new TagService();
 	private ArticleService artServ = new ArticleService();
-	private List<Tag> tags;
-	private List<Article> arts;
-	private int selectedTagId = -1;
+	private List<Tag> _tags;
+	private List<Article> _arts;
+	private boolean _onTreeView = false;
+	private int _selectedTagId = -1;
 	
 	@Wire("#viewArea")
 	private Div viewArea;
@@ -51,14 +52,13 @@ public class ForumViewModel {
 		else
 			veiwInner.setSrc("/list.zul");
 		
+		_onTreeView = onTreeView;
 		articleClose();
-		
 		veiwInner.invalidate();
 	}
 	private void articleClose(){
 		if(articleInner != null){
-			articleInner.setSrc("");
-			articleInner.invalidate();
+			viewArea.removeChild(articleInner);
 		}
 	}
 	@Command
@@ -66,13 +66,14 @@ public class ForumViewModel {
 		if(articleId !=null){
 			if (articleInner == null) {
 				articleInner = new Include();
-				articleInner.setId("articleInner");
 				articleInner.setSrc("/article.zul");
 				articleInner.setDynamicProperty("articleId",articleId);
+				articleInner.setDynamicProperty("onTreeView",_onTreeView);
 				viewArea.insertBefore(articleInner, viewArea);
 			}else{
-				articleInner.setSrc("/article.zul");
 				articleInner.setDynamicProperty("articleId", articleId);
+				articleInner.setDynamicProperty("onTreeView",_onTreeView);
+				viewArea.insertBefore(articleInner, viewArea);
 				articleInner.invalidate();
 			}
 		}
@@ -82,33 +83,33 @@ public class ForumViewModel {
 	public void select(@BindingParam("tagId")String tagId) {
 		int id = Integer.parseInt(tagId);
 		
-		if(selectedTagId != id){
-			selectedTagId = id;
+		if(_selectedTagId != id){
+			_selectedTagId = id;
+			articleClose();
 			//refresh include
 			veiwInner.invalidate();
-			articleClose();
 		}
 	}
 	
 	//constructor
 	public ForumViewModel() {
-		tags = tagServ.getAll();
+		_tags = tagServ.getAll();
 	}
 	
 	// getter and setter
 	public List<Tag> getTags() {
-		return tags;
+		return _tags;
 	}
 	public void setTags(List<Tag> tags) {
-		this.tags = tags;
+		_tags = tags;
 	}
 
 	public TreeModel getTm() {
-		return new TagsTreeModel(tagServ.getArticleTreeByTag(selectedTagId));
+		return new TagsTreeModel(tagServ.getArticleTreeByTag(_selectedTagId));
 	}
 
 	public List<Article> getArts() {
-		return tagServ.getArtsByTag(selectedTagId);
+		return tagServ.getArtsByTag(_selectedTagId);
 	}
 	
 }

@@ -13,10 +13,10 @@
 	         <treecol label="Time" hflex="1"/>
 		</treecols>
 		<template name="model" var="art">
-        	<treeitem>
+        	<treeitem onClick="@command('clickArtTitle',articleId=art.id)">
        			<treerow>
-       				<treecell label="${art.title}" onClick="@command('clickArtTitle',articleId=art.id)"/>
-       				<treecell label="${art.time}"/>
+       				<treecell label="@load(art.title)"/>
+       				<treecell label="@load(art.time) @converter('formatedDate', format='yyyy/MM/dd HH:mm')"/>
         		</treerow>
         	</treeitem>
    		</template>

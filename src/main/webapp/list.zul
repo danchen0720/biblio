@@ -15,9 +15,9 @@
 				<listheader label="Time" hflex="1"/>
 			</listhead>
 			<template name="model" var="art">
-				<listitem>
-					<listcell label="${art.title}" onClick="@command('clickArtTitle',articleId=art.id)"/>
-					<listcell label="${art.time}"/>
+				<listitem onClick="@command('clickArtTitle',articleId=art.id)">
+					<listcell label="@load(art.title)"/>
+					<listcell label="@load(art.time) @converter('formatedDate', format='yyyy/MM/dd HH:mm')"/>
 				</listitem>
 			</template>
 		</listbox>

@@ -13,12 +13,17 @@ public class ArticleService {
 		artDao = new ArticleDAO();
 	}
 	
-	public List<Article> getArtsById(String articleId) {
+	public List<Article> getArtsById(String articleId,boolean onTreeView) {
 		
 		if(articleId != null){
 			int id = Integer.parseInt(articleId);
 			if(id >= 0){
-				return artDao.getArtFamily(id);
+				if(onTreeView) {
+					List<Article> temp = new ArrayList();
+					temp.add(artDao.findOne(id));
+					return temp;
+				} else
+					return artDao.getArtFamily(id);
 			}
 		}
 		
