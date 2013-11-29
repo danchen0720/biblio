@@ -1,43 +1,42 @@
 <zk>
 	<style>
-		.z-grid{
+		.article .z-grid{
 			border : 0px;
 		}
-		.z-columns{
+		.article .z-columns{
 			display :none;
 		}
-		.z-row{
+		.article .z-row{
 			height : 300px;
 		}
-		.z-row .z-row-inner, .z-row .z-cell{
+		.article .z-row .z-row-inner, .article .z-row .z-cell{
 			border-bottom : 2px solid white;
 			border-right : 0px;
 			background-color : #f7f7f7;
 		}
-		.z-row .z-row-inner:last-child .z-row-content{
+		.article .z-row .z-row-inner:last-child .z-row-content{
 			background-color : white;
 			width : 99%;
 			height : 280px;
 		}
-		.z-row:last-child .z-row-inner{
+		.article .z-row:last-child .z-row-inner{
 			border-bottom : 0px;
 		}
-		.z-row:hover>.z-row-inner, .z-grid-odd>.z-row-inner, .z-row:hover>.z-cell{
+		.article .z-row:hover>.z-row-inner, .article .z-grid-odd>.z-row-inner, .article .z-row:hover>.z-cell{
 			background : none;
 			background-color : #f7f7f7;
 		}
-		.reply-title{
+		.article .reply-title{
 			font-family: Arial,Sans-serif;
 			font-size: 12px;
 			font-weight: bold;
 			color: #636363;
 		}
-		.z-grid-footer{
+		.article .z-grid-footer{
 			border:0px;
 		}
 	</style>
-	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('artvm') @init('com.danchen.biblio.viewmodel.ArticleViewModel')">
-
+	<div sclass="article" apply="org.zkoss.bind.BindComposer" viewModel="@id('artvm') @init('com.danchen.biblio.viewmodel.ArticleViewModel')">
 		<grid model="@load(artvm.arts)" hflex="1">
 			<columns>
 				<column hflex="1"/>
@@ -68,7 +67,7 @@
 								</rows>
 								<foot>
 									<footer span="2">
-										<button style="float:right; margin-top:5px;" label="reply"></button>
+										<button style="float:right; margin-top:5px;" label="reply" onClick="@command('reply', btn=self, post=art.id)"></button>
 									</footer>
 								</foot>
 						     </grid>
@@ -76,7 +75,7 @@
 					</row>
 				</template>
 			</rows>
-			<!-- 
+			<!--
 			<foot>
 				<footer span="2"  xmlns:w="http://www.zkoss.org/2005/zk/client">
 					<label sclass="reply-title">Leave a Reply</label>
@@ -92,7 +91,7 @@
 					<button style="float:right; margin-top:5px;" label="Post Comment"></button>
 				</footer>
 			</foot>
-			 -->
+			-->
 		</grid>
 	</div>
 </zk>

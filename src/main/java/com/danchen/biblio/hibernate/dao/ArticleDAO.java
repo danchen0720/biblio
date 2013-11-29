@@ -9,6 +9,7 @@ import org.hibernate.Session;
 
 import com.danchen.biblio.hibernate.bean.Article;
 import com.danchen.biblio.hibernate.bean.Tag;
+import com.danchen.biblio.hibernate.bean.User;
 import com.danchen.biblio.misc.HibernateUtil;
 
 public class ArticleDAO {
@@ -39,7 +40,7 @@ public class ArticleDAO {
 		}
 		return false;
 	}
-
+	
 	public Article insert(Article newArticle) {
 		Session session = HibernateUtil.currentSession();
 		session.save(newArticle);
@@ -54,15 +55,33 @@ public class ArticleDAO {
 		return query.list();
 	}
 	
+	public List<Article> findNoParentArts() {
+		Session session = HibernateUtil.currentSession();
+		return session.createQuery("from Article as art where art.parent <> 0 ORDER BY art.time DESC").list();
+	}
+	public List<Article> findNoParentArts(int quantity) {
+		Session session = HibernateUtil.currentSession();
+		return session.createQuery("from Article as art where art.parent <> 0 ORDER BY art.time DESC").setMaxResults(quantity).list();
+	}
+	
 	public List<Article> findMainArts(){
 		Session session = HibernateUtil.currentSession();
 		return session.createQuery("from Article as art where art.parent=0 ORDER BY art.time DESC").list();
+	}
+	public List<Article> findMainArts(int quantity){
+		Session session = HibernateUtil.currentSession();
+		return session.createQuery("from Article as art where art.parent=0 ORDER BY art.time DESC").setMaxResults(quantity).list();
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Article> findAll() {
 		Session session = HibernateUtil.currentSession();
 		return session.createQuery("from Article as art where art.id <> 0").list();
+	}
+	@SuppressWarnings("unchecked")
+	public List<Article> findAll(int quantity) {
+		Session session = HibernateUtil.currentSession();
+		return session.createQuery("from Article as art where art.id <> 0 ORDER BY art.time DESC").setMaxResults(quantity).list();
 	}
 	
 	public Article findOne(int articleId){
@@ -72,19 +91,25 @@ public class ArticleDAO {
 		Article result = (Article) query.uniqueResult();
 		return result;
 	}
-								
+	
 	public List<Article> getArtFamily(int articleId) {
 		Session session = HibernateUtil.currentSession();
-		Query query = session.createQuery("from Article as art where art.id=:articleId or art.parent=:articleId");
+		Query query = session.createQuery("from Article as art where art.parent in (select artcle.id from Article as artcle  where artcle.parent=:articleId) or art.parent=:articleId or art.id=:articleId ORDER BY art.time ASC");
 		query.setInteger("articleId", articleId);
 		List<Article> result = query.list();
 		return result;
 	}
+	
 	public List<Article> getByUser(int userId) {
 		Session session = HibernateUtil.currentSession();
 		Query query = session.createQuery("from Article as art where art.User=:userId");
 		query.setInteger("userId", userId);
-		List<Article> result = query.list();
-		return result;
+		return query.list();
+	}
+	public List<Article> getByUser(User user,int quantity) {
+		Session session = HibernateUtil.currentSession();
+		Query query = session.createQuery("from Article as art where art.user=:user ORDER BY art.time DESC");
+		query.setEntity("user", user);
+		return query.setMaxResults(quantity).list();
 	}
 }

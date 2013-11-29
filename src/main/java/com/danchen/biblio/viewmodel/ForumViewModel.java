@@ -7,6 +7,7 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
@@ -18,6 +19,7 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Tree;
 import org.zkoss.zul.TreeModel;
+import org.zkoss.zul.Window;
 
 import com.danchen.biblio.hibernate.bean.Article;
 import com.danchen.biblio.hibernate.bean.Tag;
@@ -33,7 +35,7 @@ public class ForumViewModel {
 	private boolean _onTreeView = false;
 	private int _selectedTagId = -1;
 	
-	@Wire("#viewArea")
+	@Wire("#viewArea")//wire component by id
 	private Div viewArea;
 	
 	@Wire("#veiwInner")
@@ -43,6 +45,14 @@ public class ForumViewModel {
 	@AfterCompose(superclass=true)
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         Selectors.wireComponents(view, this, false);
+        Object temp = Executions.getCurrent().getSession().getAttribute("articleId");
+        if (temp != null) {
+        	String articleId = temp+"";
+    		if (articleId != null) {
+    			Executions.getCurrent().getSession().removeAttribute("articleId");
+    			clickArtTitle(articleId);
+    		}
+        }
     }
 	
 	@Command
@@ -61,6 +71,7 @@ public class ForumViewModel {
 			viewArea.removeChild(articleInner);
 		}
 	}
+	
 	@Command
 	public void clickArtTitle(@BindingParam("articleId")String articleId) {
 		if(articleId !=null){
@@ -80,9 +91,16 @@ public class ForumViewModel {
 	}
 	
 	@Command
-	public void select(@BindingParam("tagId")String tagId) {
+	public void addNewTopic() {
+		 Window window = (Window)Executions.createComponents(
+	                "/editor.zul", null, null);
+	        window.doModal();
+	}
+	
+	@Command
+	public void tagClick(@BindingParam("tagId")String tagId) {
 		int id = Integer.parseInt(tagId);
-		
+		//change article counts by tag
 		if(_selectedTagId != id){
 			_selectedTagId = id;
 			articleClose();
@@ -105,6 +123,7 @@ public class ForumViewModel {
 	}
 
 	public TreeModel getTm() {
+		//dynamic change the item in tree
 		return new TagsTreeModel(tagServ.getArticleTreeByTag(_selectedTagId));
 	}
 

@@ -28,16 +28,16 @@
 			<button style="float:right" label="liseview" onClick="@command('changeView',onTreeView=false)"/>
 		</div>
 		<div style="margin-top:3em;">
-			<button style="float:right" label="addNewTopic" onClick='Executions.sendRedirect("/addnew.zul")'/>
+			<button style="float:right" label="addNewTopic" onClick="@command('addNewTopic')"/>
 		</div>
 		<div id="viewArea" style="clear:both; margin-top:5em;">
 			<include id="veiwInner" src="list.zul" />
 		</div>
 		<div sclass="tag-btn">
-			<button style="float:left;" label="All" onClick="@command('select',tagId=-1)"/>
+			<button style="float:left;" label="All" onClick="@command('tagClick',tagId=-1)"/>
 			<div children="@load(fourmvm.tags)">
 				<template name="children" var="tag">
-		   			<button style="float:left;" label="@load(tag.name)" onClick="@command('select',tagId=tag.id)"/>
+		   			<button style="float:left;" label="@load(tag.name)" onClick="@command('tagClick',tagId=tag.id)"/>
 		        </template>
 			</div>
 		</div>

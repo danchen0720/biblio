@@ -11,21 +11,36 @@
 			border:0px;
 		}
 	</style>
-	<hbox width="900px">								
-		<listbox>
+	<hbox width="900px" apply="org.zkoss.bind.BindComposer" viewModel="@id('indexvm') @init('com.danchen.biblio.viewmodel.IndexViewModel')">								
+		<listbox model="@load(indexvm.topics)">
 			<listhead>
-				<listheader label="new topics"/>
-			</listhead>
+				<listheader label="New Topics"/>
+			</listhead>			
+			<template name="model" var="topic">
+				<listitem onClick="@command('clickArtTitle',articleId=topic.id)">
+					<listcell label="@load(topic.title)"/>
+				</listitem>
+			</template>
 		</listbox>
-		<listbox>
+		<listbox model="@load(indexvm.posts)">
 			<listhead>
-				<listheader label="last posts"/>
+				<listheader label="Last Posts"/>
 			</listhead>
+			<template name="model" var="post">
+				<listitem onClick="@command('clickArtTitle',articleId=post.id)">
+					<listcell label="@load(post.title)"/>
+				</listitem>
+			</template>
 		</listbox>
-		<listbox>
+		<listbox model="@load(indexvm.personal)">
 			<listhead>
-				<listheader label="personal"/>
+				<listheader label="Personal"/>
 			</listhead>
+			<template name="model" var="pPost">
+				<listitem onClick="@command('clickArtTitle',articleId=pPost.id)">
+					<listcell label="@load(pPost.title)"/>
+				</listitem>
+			</template>
 		</listbox>
 	</hbox>
 	<borderlayout sclass="index-borderlayout" height="200px" width="900px">

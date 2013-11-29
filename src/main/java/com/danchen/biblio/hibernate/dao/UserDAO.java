@@ -2,6 +2,7 @@ package com.danchen.biblio.hibernate.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.danchen.biblio.hibernate.bean.Article;
@@ -25,7 +26,7 @@ public class UserDAO {
 	public boolean delete(int id) {
 		Session session = HibernateUtil.currentSession();
 		User bean = (User)session.get(User.class, id);
-		if(bean != null){
+		if (bean != null) {
 			session.delete(bean);
 			return true;
 		}
@@ -43,5 +44,10 @@ public class UserDAO {
 	public List<User> findAll() {
 		Session session = HibernateUtil.currentSession();
 		return session.createQuery("from User").list(); 
+	}
+	public User findOneBy(String userName) {
+		Session session = HibernateUtil.currentSession();
+		Query query = session.createQuery("from User where username=:userName");
+		return (User) query.setString("userName", userName).uniqueResult(); 
 	}
 }

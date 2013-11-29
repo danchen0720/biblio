@@ -1,14 +1,22 @@
 <?page title="personalpost" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<listbox width="100%">
-		<listhead>
-			<listheader label="Title" hflex="5"/>
-			<listheader align="center" label="Time" hflex="1"/>
-			<listheader align="center" label="modify" hflex="1"/>
-			<listheader align="center" label="delete" hflex="1"/>
-		</listhead>
-		<listitem>
-			
-		</listitem>
-	</listbox>
+	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('personalvm') @init('com.danchen.biblio.viewmodel.PersonalVeiwModel')">
+		<listbox width="100%">
+		    <auxhead>
+		        <auxheader label="Dear xxx" colspan="4" />
+		    </auxhead>
+			<listhead>
+				<listheader label="Title" hflex="5"/>
+				<listheader align="center" label="Time" hflex="1"/>
+				<listheader align="center" label="modify" hflex="1"/>
+				<listheader align="center" label="delete" hflex="1"/>
+			</listhead>
+			<listitem>
+				<listcell>Title</listcell>
+				<listcell>Time</listcell>
+				<listcell><button style="width:100%;" label="modify" onClick="@command('modify')"/></listcell>
+				<listcell><button style="width:100%;" label="delete" disabled="true"/></listcell>
+			</listitem>
+		</listbox>
+	</div>
 </zk>

@@ -1,0 +1,31 @@
+<zk>
+	<window id="editorWindow" title="" border="normal" width="900px" 
+		apply="org.zkoss.bind.BindComposer" viewModel="@id('editorvm') @init('com.danchen.biblio.viewmodel.EditorViewModel')">
+		<style>
+			.z-columns{
+				display :none;
+			}
+		</style>
+		<grid>
+			<auxhead>
+	            <auxheader id="header" label="Add New Topic" colspan="2" rowspan="1" />
+	        </auxhead>
+			<columns>
+				<column align="center" hflex="min"/>
+				<column />
+			</columns>
+			<rows>
+				<row>Title<textbox hflex="1"/></row>
+				<row>tag <selectbox/>
+	            </row>
+			</rows>
+			<foot>
+				<footer span="2">
+					<ckeditor/>
+					<button style="float:left; margin-top:5px;" label="Cancel" onClick="@command('cancel')"></button>
+					<button style="float:right; margin-top:5px;" label="Post Comment"></button>
+				</footer>
+			</foot>
+		</grid>
+	</window>
+</zk>
