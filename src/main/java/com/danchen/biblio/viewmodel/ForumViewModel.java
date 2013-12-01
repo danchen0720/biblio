@@ -1,23 +1,21 @@
 package com.danchen.biblio.viewmodel;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.GlobalCommand;
-import org.zkoss.bind.annotation.Init;
-import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Button;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Include;
-import org.zkoss.zul.Tree;
 import org.zkoss.zul.TreeModel;
 import org.zkoss.zul.Window;
 
@@ -92,7 +90,7 @@ public class ForumViewModel {
 	
 	@Command
 	public void addNewTopic() {
-		 Window window = (Window)Executions.createComponents(
+		Window window = (Window)Executions.createComponents(
 	                "/editor.zul", null, null);
 	        window.doModal();
 	}
@@ -107,6 +105,13 @@ public class ForumViewModel {
 			//refresh include
 			veiwInner.invalidate();
 		}
+	}
+	
+	@Command
+	public void logout() {
+		Execution exec = Executions.getCurrent();
+		exec.getSession().removeAttribute("user");
+		exec.sendRedirect("/login.zul");
 	}
 	
 	//constructor
@@ -124,11 +129,11 @@ public class ForumViewModel {
 
 	public TreeModel getTm() {
 		//dynamic change the item in tree
-		return new TagsTreeModel(tagServ.getArticleTreeByTag(_selectedTagId));
+		return new TagsTreeModel(tagServ.getArtsByTag(_selectedTagId,true));
 	}
 
 	public List<Article> getArts() {
-		return tagServ.getArtsByTag(_selectedTagId);
+		return tagServ.getArtsByTag(_selectedTagId,false);
 	}
 	
 }

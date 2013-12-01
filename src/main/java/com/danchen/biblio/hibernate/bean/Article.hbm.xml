@@ -14,6 +14,9 @@
         <property name="parent" type="java.lang.Integer">
             <column name="PARENT" not-null="false" />
         </property>
+        <property name="topic" type="java.lang.Integer">
+            <column name="TOPIC" not-null="true" />
+        </property>
         <property name="time" type="timestamp">
             <column name="TIME" length="26" not-null="true" />
         </property>
@@ -34,9 +37,15 @@
                 <column name="TAG" not-null="true" />
             </many-to-many>
         </set>
-        <set name="children" table="ARTICLE" inverse="true" lazy="false" fetch="select" order-by="time DESC">
+        <set name="children" table="ARTICLE" inverse="true" lazy="false" fetch="select" order-by="time ASC">
             <key>
                 <column name="PARENT" />
+            </key>
+            <one-to-many class="com.danchen.biblio.hibernate.bean.Article" />
+        </set>
+        <set name="posts" table="ARTICLE" inverse="true" lazy="false" fetch="select" order-by="time DESC">
+            <key>
+                <column name="TOPIC" />
             </key>
             <one-to-many class="com.danchen.biblio.hibernate.bean.Article" />
         </set>

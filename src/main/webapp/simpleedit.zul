@@ -1,7 +1,6 @@
 <zk>
 	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('seditvm') @init('com.danchen.biblio.viewmodel.SimpleEditViewMondel')">
-		<label sclass="reply-title">Leave a Reply</label>
-		<ckeditor xmlns:w="http://www.zkoss.org/2005/zk/client">
+		<ckeditor value="@save(seditvm.content)" xmlns:w="http://www.zkoss.org/2005/zk/client">
 			<attribute w:name="bind_">
 				function () {
 				 	CKEDITOR.config.toolbar_Simple = [ [ 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', '-', 'About' ] ];
@@ -11,6 +10,6 @@
 			</attribute>
 		</ckeditor>
 		<button style="float:left; margin-top:5px;" label="cancel" onClick="@command('cancel',btn=self)"></button>
-		<button style="float:right; margin-top:5px;" label="Post Comment" onClick="@command('postComment')"></button>
+		<button style="float:right; margin-top:5px;" label="confirm" onClick="@command('confirm')"></button>
 	</div>
 </zk>

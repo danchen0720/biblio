@@ -11,7 +11,7 @@
 			border:0px;
 		}
 	</style>
-	<hbox width="900px" apply="org.zkoss.bind.BindComposer" viewModel="@id('indexvm') @init('com.danchen.biblio.viewmodel.IndexViewModel')">								
+	<hbox width="1000px" apply="org.zkoss.bind.BindComposer" viewModel="@id('indexvm') @init('com.danchen.biblio.viewmodel.IndexViewModel')">								
 		<listbox model="@load(indexvm.topics)">
 			<listhead>
 				<listheader label="New Topics"/>
@@ -19,6 +19,7 @@
 			<template name="model" var="topic">
 				<listitem onClick="@command('clickArtTitle',articleId=topic.id)">
 					<listcell label="@load(topic.title)"/>
+					<listcell label="@load(topic.time) @converter('formatedDate', format='yyyy/MM/dd HH:mm')"/>
 				</listitem>
 			</template>
 		</listbox>
@@ -29,6 +30,7 @@
 			<template name="model" var="post">
 				<listitem onClick="@command('clickArtTitle',articleId=post.id)">
 					<listcell label="@load(post.title)"/>
+					<listcell label="@load(post.time) @converter('formatedDate', format='yyyy/MM/dd HH:mm')"/>
 				</listitem>
 			</template>
 		</listbox>
@@ -39,11 +41,12 @@
 			<template name="model" var="pPost">
 				<listitem onClick="@command('clickArtTitle',articleId=pPost.id)">
 					<listcell label="@load(pPost.title)"/>
+					<listcell label="@load(pPost.time) @converter('formatedDate', format='yyyy/MM/dd HH:mm')"/>
 				</listitem>
 			</template>
 		</listbox>
 	</hbox>
-	<borderlayout sclass="index-borderlayout" height="200px" width="900px">
+	<borderlayout sclass="index-borderlayout" height="200px" width="1000px">
    		<north title=" "/>
    		<center>
         	<button label="Forum" width="100%" height="100%" onClick='Executions.sendRedirect("/forum.zul")'/>

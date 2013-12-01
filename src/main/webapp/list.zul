@@ -11,13 +11,13 @@
 	<div>
 		<listbox model="@load(fourmvm.arts)">
 			<listhead>
-				<listheader label="Title" hflex="5"/>
-				<listheader label="Time" hflex="1"/>
+				<listheader label="Topic" hflex="5"/>
+				<listheader label="Last Post" hflex="1"/>
 			</listhead>
 			<template name="model" var="art">
 				<listitem onClick="@command('clickArtTitle',articleId=art.id)">
 					<listcell label="@load(art.title)"/>
-					<listcell label="@load(art.time) @converter('formatedDate', format='yyyy/MM/dd HH:mm')"/>
+					<listcell label="@load(art.postTime) @converter('formatedDate', format='yyyy/MM/dd HH:mm')"/>
 				</listitem>
 			</template>
 		</listbox>

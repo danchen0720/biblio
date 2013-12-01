@@ -38,28 +38,57 @@ public class TagService {
 		return result;
 	}
 	
-	public List<Article> getArticleTreeByTag(int id) {
-		List<Article> artTree =  new ArrayList<Article>();
+	public List<Article> getArtsByTag(int id, boolean isTree) {
+		List<Article> arts = new ArrayList<Article>();
 		ArticleDAO artDao = new ArticleDAO();
 		if(id < 0) 
-			artTree.addAll(artDao.findMainArts());
-		else 
-			artTree.addAll(tagDao.findOne(id).getArticles());
-
-		//add root	
-		artTree.add(0,artDao.findOne(0));
-		return artTree;
-	}
-	public List<Article> getArtsByTag(int id) {
-		List<Article> arts = null;
-		ArticleDAO artDao = new ArticleDAO();
-		if(id < 0) 
-			arts = artDao.findMainArts();
+			//get topic's top new posts
+			arts.addAll(artDao.findMainArts());	
 		else {
-			arts =  new ArrayList<Article>();
-			arts.addAll(tagDao.findOne(id).getArticles());
+			//get article by tag and check state
+			List<Article> tempList = new ArrayList(tagDao.findOne(id).getArticles());
+			Article art;
+			for(Iterator<Article> itr = tempList.iterator(); itr.hasNext(); ){
+				art = itr.next();
+				if(art.getState() != 1 || art.getParent() != 0)
+					itr.remove();
+			}
+			arts.addAll(tempList);
 		}
+		if(!arts.isEmpty())
+			lastPostTimeSort(arts);
+		if(isTree)
+			arts.add(0,artDao.findRoot(0));//add root	
+		
 		return arts;
 	}
+	
+	private void lastPostTimeSort(List<Article> arts) {
+		Collections.sort(arts, new Comparator<Article>() {
+			public int compare(Article o1, Article o2) {
+				Article post1;
+				Article post2;
+				
+				if (o1.getPosts().size() > 0)
+					post1 = o1.getPosts().iterator().next();
+				else
+					post1 = o1;
+				
+				if (o2.getPosts().size() > 0)
+					post2 = o2.getPosts().iterator().next();
+				else
+					post2 = o2;
+				
+				if (post1.getTime().before(post2.getTime())) {
+					return 1;
+				} else if (post1.getTime().after(post2.getTime())) {
+					return -1;
+				} else {
+					return 0;
+				} 
+			}
+		});
+	}
+	
 	
 }

@@ -8,6 +8,7 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.zk.ui.Executions;
 
 import com.danchen.biblio.hibernate.bean.Article;
+import com.danchen.biblio.hibernate.bean.User;
 import com.danchen.biblio.service.ArticleService;
 
 public class IndexViewModel {
@@ -20,9 +21,8 @@ public class IndexViewModel {
 		artServ = new ArticleService();
 		_topics = artServ.getToptics();
 		_posts = artServ.getPosts();
-		//username
-		String username = "Davidxxx";
-		_personal = artServ.getPersonal(username);
+		User user = (User) Executions.getCurrent().getSession().getAttribute("user");
+		_personal = artServ.getPersonal(user.getUsername());
 	}
 	
 	@Command

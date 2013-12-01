@@ -36,7 +36,7 @@
 			border:0px;
 		}
 	</style>
-	<div sclass="article" apply="org.zkoss.bind.BindComposer" viewModel="@id('artvm') @init('com.danchen.biblio.viewmodel.ArticleViewModel')">
+	<div xmlns:n="native" sclass="article" apply="org.zkoss.bind.BindComposer" viewModel="@id('artvm') @init('com.danchen.biblio.viewmodel.ArticleViewModel')">
 		<grid model="@load(artvm.arts)" hflex="1">
 			<columns>
 				<column hflex="1"/>
@@ -62,7 +62,7 @@
 								<rows>
 									 <row>
 										<div sclass="test">user</div>
-										<div>${art.content}</div>
+										<n:div>${art.content}</n:div>
 									</row>
 								</rows>
 								<foot>

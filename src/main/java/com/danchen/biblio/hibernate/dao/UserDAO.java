@@ -45,6 +45,11 @@ public class UserDAO {
 		Session session = HibernateUtil.currentSession();
 		return session.createQuery("from User").list(); 
 	}
+	public User findOneBy(int id) {
+		Session session = HibernateUtil.currentSession();
+		Query query = session.createQuery("from User where id=:id");
+		return (User) query.setInteger("id", id).uniqueResult(); 
+	}
 	public User findOneBy(String userName) {
 		Session session = HibernateUtil.currentSession();
 		Query query = session.createQuery("from User where username=:userName");

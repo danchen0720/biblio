@@ -23,10 +23,9 @@ public class User implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public User(String password, String username, Set articles) {
+	public User(String password, String username) {
 		this.password = password;
 		this.username = username;
-		this.articles = articles;
 	}
 
 	public Integer getId() {

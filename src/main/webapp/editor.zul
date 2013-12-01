@@ -8,22 +8,27 @@
 		</style>
 		<grid>
 			<auxhead>
-	            <auxheader id="header" label="Add New Topic" colspan="2" rowspan="1" />
+	            <auxheader label="editor" colspan="2" rowspan="1" />
 	        </auxhead>
 			<columns>
 				<column align="center" hflex="min"/>
 				<column />
 			</columns>
 			<rows>
-				<row>Title<textbox hflex="1"/></row>
-				<row>tag <selectbox/>
+				<row>Title<textbox id="titleText" hflex="1" value="@bind(editorvm.title)"/></row>
+				<row>tag
+					<selectbox id="tagSelect" selectedIndex="@bind(editorvm.tagSelectedIndex)" model="@load(editorvm.tags)">
+						<template name="model" var="tag">
+							<label value="@load(tag.name)"/>
+						</template>
+					</selectbox>	
 	            </row>
 			</rows>
 			<foot>
 				<footer span="2">
-					<ckeditor/>
+					<ckeditor value="@bind(editorvm.content)"/>
 					<button style="float:left; margin-top:5px;" label="Cancel" onClick="@command('cancel')"></button>
-					<button style="float:right; margin-top:5px;" label="Post Comment"></button>
+					<button style="float:right; margin-top:5px;" label="Post" onClick="@command('post')"></button>
 				</footer>
 			</foot>
 		</grid>

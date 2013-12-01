@@ -15,15 +15,16 @@ import org.hibernate.annotations.OrderBy;
 public class Article implements java.io.Serializable {
 
 	private Integer id;
-	private Article article;
 	private User user;
 	private Date time;
 	private Integer parent;
+	private Integer topic;
 	private Integer state;
 	private String content;
 	private String title;
 	private Set<Tag> tags = new HashSet(0);
 	private Set<Article> children = new TreeSet();
+	private Set<Article> posts = new TreeSet();
 
 	public Article() {
 	}
@@ -32,23 +33,16 @@ public class Article implements java.io.Serializable {
 		this.id = id;
 	}
 	
-	public Article(User user, Date time, int state) {
+	public Article(User user, Date time, Integer parent, Integer topic, int state,
+			String content, String title, Set<Tag> tags) {
 		this.user = user;
 		this.time = time;
-		this.state = state;
-	}
-
-	public Article(Article article,Integer parent, User user, Date time, int state,
-			String content, String title, Set tags, Set articles) {
-		this.article = article;
 		this.parent = parent;
-		this.user = user;
-		this.time = time;
+		this.topic = topic;
 		this.state = state;
 		this.content = content;
 		this.title = title;
 		this.tags = tags;
-		this.children = articles;
 	}
 
 	public Integer getParent() {
@@ -65,14 +59,6 @@ public class Article implements java.io.Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Article getArticle() {
-		return this.article;
-	}
-
-	public void setArticle(Article article) {
-		this.article = article;
 	}
 
 	public User getUser() {
@@ -129,6 +115,27 @@ public class Article implements java.io.Serializable {
 
 	public void setChildren(Set articles) {
 		this.children = articles;
+	}
+
+	public Integer getTopic() {
+		return topic;
+	}
+	public void setTopic(Integer topic) {
+		this.topic = topic;
+	}
+
+	public Set<Article> getPosts() {
+		return posts;
+	}
+	public void setPosts(Set<Article> posts) {
+		this.posts = posts;
+	}
+	
+	public Date getPostTime(){
+		if(getPosts().size() > 0)
+			return getPosts().iterator().next().getTime();
+		else
+			return time;
 	}
 
 }

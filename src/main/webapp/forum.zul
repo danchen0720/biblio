@@ -24,11 +24,12 @@
 	 	<div sclass="topbar">
 			<label value="username"/>
 			<a href="/personal.zul" label="Personal Post"/>
+			<a href="" onClick="@command('logout')" label="Log out"/>
 			<button style="float:right" label="treeview" onClick="@command('changeView',onTreeView=true)"/>
 			<button style="float:right" label="liseview" onClick="@command('changeView',onTreeView=false)"/>
 		</div>
 		<div style="margin-top:3em;">
-			<button style="float:right" label="addNewTopic" onClick="@command('addNewTopic')"/>
+			<button style="float:right" label="New Topic" onClick="@command('addNewTopic')"/>
 		</div>
 		<div id="viewArea" style="clear:both; margin-top:5em;">
 			<include id="veiwInner" src="list.zul" />
