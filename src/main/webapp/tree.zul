@@ -1,3 +1,4 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <zk>
     <style>
     	.z-tree{
@@ -9,8 +10,8 @@
     </style>
 	<tree id="artTreeView" model="@load(fourmvm.tm)">
 	    <treecols>
-	        <treecol label="Title" hflex="5"/>
-	         <treecol label="Time" hflex="1"/>
+	        <treecol label="${c:l('tree_topic')}" hflex="5"/>
+	         <treecol label="${c:l('tree_time')}" hflex="1"/>
 		</treecols>
 		<template name="model" var="art">
         	<treeitem onClick="@command('clickArtTitle',articleId=art.id)">

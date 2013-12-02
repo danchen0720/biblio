@@ -1,3 +1,4 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <zk>
 	<window id="editorWindow" title="" border="normal" width="900px" 
 		apply="org.zkoss.bind.BindComposer" viewModel="@id('editorvm') @init('com.danchen.biblio.viewmodel.EditorViewModel')">
@@ -8,15 +9,15 @@
 		</style>
 		<grid>
 			<auxhead>
-	            <auxheader label="editor" colspan="2" rowspan="1" />
+	            <auxheader label="${c:l('editor_editor')}" colspan="2" rowspan="1" />
 	        </auxhead>
 			<columns>
 				<column align="center" hflex="min"/>
 				<column />
 			</columns>
 			<rows>
-				<row>Title<textbox id="titleText" hflex="1" value="@bind(editorvm.title)"/></row>
-				<row>tag
+				<row>${c:l('editor_title')}<textbox id="titleText" hflex="1" value="@bind(editorvm.title)"/></row>
+				<row>${c:l('editor_Tag')}
 					<selectbox id="tagSelect" selectedIndex="@bind(editorvm.tagSelectedIndex)" model="@load(editorvm.tags)">
 						<template name="model" var="tag">
 							<label value="@load(tag.name)"/>
@@ -27,8 +28,8 @@
 			<foot>
 				<footer span="2">
 					<ckeditor value="@bind(editorvm.content)"/>
-					<button style="float:left; margin-top:5px;" label="Cancel" onClick="@command('cancel')"></button>
-					<button style="float:right; margin-top:5px;" label="Post" onClick="@command('post')"></button>
+					<button style="float:left; margin-top:5px;" label="${c:l('editor_cancel')}" onClick="@command('cancel')"></button>
+					<button style="float:right; margin-top:5px;" label="${c:l('editor_post')}" onClick="@command('post')"></button>
 				</footer>
 			</foot>
 		</grid>

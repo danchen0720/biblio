@@ -1,25 +1,33 @@
-<?page title="personalpost" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <zk>
 	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('personalvm') @init('com.danchen.biblio.viewmodel.PersonalVeiwModel')">
 		<listbox width="100%" model="@load(personalvm.arts)">
 		    <auxhead>
-		        <auxheader label="Dear xxx" colspan="5" />
+		        <auxheader label="${c:l('personal_hello')}" colspan="5" />
 		    </auxhead>
 			<listhead>
-				<listheader label="Title" hflex="5"/>
-				<listheader align="center" label="Time" hflex="1"/>
-				<listheader align="center" label="status" hflex="1"/>
-				<listheader align="center" label="modify" hflex="1"/>
-				<listheader align="center" label="delete" hflex="1"/>
+				<listheader label="${c:l('personal_title')}" hflex="5"/>
+				<listheader align="center" label="${c:l('personal_time')}" hflex="1"/>
+				<listheader align="center" label="${c:l('personal_state')}" hflex="1"/>
+				<listheader align="center" label="${c:l('personal_option_modify')}" hflex="1"/>
+				<listheader align="center" label="${c:l('personal_option_delete')}" hflex="1"/>
 			</listhead>
 			<template name="model" var="art">
 				<listitem>
 					<listcell><label value="@load(art.title)"/></listcell>
 					<listcell><label value="@load(art.time)"/></listcell>
-					<listcell><label value="@load(art.state)"/></listcell>
-					<listcell if="${art.parent == 0}"><button style="width:100%;" disabled="true" label="modify"/></listcell>
-					<listcell if="${art.parent != 0}"><button style="width:100%;" label="modify" onClick="@command('modify',id=art.id)"/></listcell>
-					<listcell><button style="width:100%;" label="delete" onClick="@command('delete',id=art.id)"/></listcell>
+					<zk if="${art.state == 0}">
+						<listcell><label value="${c:l('personal_state_unprocessed')}"/></listcell>
+					</zk>
+					<zk if="${art.state == 1}">
+						<listcell><label value="${c:l('personal_state_posted')}"/></listcell>
+					</zk>
+					<zk if="${art.state == 2}">
+						<listcell><label value="${c:l('personal_state_removed')}"/></listcell>
+					</zk>
+					<listcell if="${art.parent == 0}"><button style="width:100%;" disabled="true" label="${c:l('personal_modify')}"/></listcell>
+					<listcell if="${art.parent != 0}"><button style="width:100%;" label="${c:l('personal_modify')}" onClick="@command('modify',id=art.id)"/></listcell>
+					<listcell><button style="width:100%;" label="${c:l('personal_delete')}" onClick="@command('delete',id=art.id)"/></listcell>
 				</listitem>
 			</template>
 		</listbox>

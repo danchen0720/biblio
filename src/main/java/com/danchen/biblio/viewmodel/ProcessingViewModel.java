@@ -99,13 +99,13 @@ class Task implements Runnable {
 		_qe = eventQueue;
 		_art = article;
 	}
+	@SuppressWarnings("unchecked")
 	public void run() {
 		try {
-			Thread.sleep(10000);
+			Thread.currentThread().sleep(10000);
 			Map data = new HashMap();
 			data.put("eventQueue", _qe);
 			data.put("article", _art);
-			
 			_qe.publish(new Event("update", null,data));
 		} catch (InterruptedException e) {
 			e.printStackTrace();

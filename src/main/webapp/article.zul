@@ -1,3 +1,4 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <zk>
 	<style>
 		.article .z-grid{
@@ -61,13 +62,13 @@
 								</columns>
 								<rows>
 									 <row>
-										<div sclass="test">user</div>
+										<div></div>
 										<n:div>${art.content}</n:div>
 									</row>
 								</rows>
 								<foot>
 									<footer span="2">
-										<button style="float:right; margin-top:5px;" label="reply" onClick="@command('reply', btn=self, post=art.id)"></button>
+										<button style="float:right; margin-top:5px;" label="${c:l('article_reply')}" onClick="@command('reply', btn=self, post=art.id)"></button>
 									</footer>
 								</foot>
 						     </grid>
@@ -75,23 +76,6 @@
 					</row>
 				</template>
 			</rows>
-			<!--
-			<foot>
-				<footer span="2"  xmlns:w="http://www.zkoss.org/2005/zk/client">
-					<label sclass="reply-title">Leave a Reply</label>
-					<ckeditor>
-						<attribute w:name="bind_">
-							function () {
-							 	CKEDITOR.config.toolbar_Simple = [ [ 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', '-', 'About' ] ];
-								CKEDITOR.config.toolbar = 'Simple';
-								this.$bind_();
-							}
-						</attribute>
-					</ckeditor>
-					<button style="float:right; margin-top:5px;" label="Post Comment"></button>
-				</footer>
-			</foot>
-			-->
 		</grid>
 	</div>
 </zk>

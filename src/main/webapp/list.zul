@@ -1,4 +1,4 @@
-<?page title="test" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <zk>
 	<style>
 		.z-listbox{
@@ -11,8 +11,8 @@
 	<div>
 		<listbox model="@load(fourmvm.arts)">
 			<listhead>
-				<listheader label="Topic" hflex="5"/>
-				<listheader label="Last Post" hflex="1"/>
+				<listheader label="${c:l('list_topic')}" hflex="5"/>
+				<listheader label="${c:l('list_lastPost')}" hflex="1"/>
 			</listhead>
 			<template name="model" var="art">
 				<listitem onClick="@command('clickArtTitle',articleId=art.id)">

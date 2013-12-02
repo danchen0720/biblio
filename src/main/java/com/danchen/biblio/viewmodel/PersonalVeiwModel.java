@@ -26,6 +26,7 @@ public class PersonalVeiwModel {
 		user = (User) Executions.getCurrent().getSession().getAttribute("user");
 		arts = artServ.getByUserId(user.getId());
 	}
+
 	@Command
 	public void modify(@BindingParam("id")int id) {
 		Map args = new HashMap();
@@ -57,5 +58,12 @@ public class PersonalVeiwModel {
 	}
 	public void setArts(List<Article> arts) {
 		this.arts = arts;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

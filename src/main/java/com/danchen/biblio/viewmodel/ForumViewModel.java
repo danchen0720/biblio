@@ -1,8 +1,9 @@
 package com.danchen.biblio.viewmodel;
 
 import java.util.List;
-import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -24,11 +25,13 @@ import org.zkoss.zul.Window;
 
 import com.danchen.biblio.hibernate.bean.Article;
 import com.danchen.biblio.hibernate.bean.Tag;
+import com.danchen.biblio.misc.OpenSessionInViewListener;
 import com.danchen.biblio.service.ArticleService;
 import com.danchen.biblio.service.TagService;
 import com.danchen.biblio.tm.TagsTreeModel;
 
 public class ForumViewModel {
+	private static final Logger log = LoggerFactory.getLogger(OpenSessionInViewListener.class);
 	private TagService tagServ = new TagService();
 	private ArticleService artServ = new ArticleService();
 	private List<Tag> _tags;
@@ -84,10 +87,14 @@ public class ForumViewModel {
 				articleInner.setSrc("/article.zul");
 				articleInner.setDynamicProperty("articleId",articleId);
 				articleInner.setDynamicProperty("onTreeView",_onTreeView);
+				log.debug("articleInner set articleId:"+articleId);
+				log.debug("articleInner set onTreeView:"+_onTreeView);
 				viewArea.insertBefore(articleInner, viewArea);
 			} else{ 
 				articleInner.setDynamicProperty("articleId", articleId);
 				articleInner.setDynamicProperty("onTreeView",_onTreeView);
+				log.debug("articleInner set articleId:"+articleId);
+				log.debug("articleInner set onTreeView:"+_onTreeView);
 				viewArea.insertBefore(articleInner, viewArea);
 				articleInner.invalidate();
 			}
@@ -105,8 +112,10 @@ public class ForumViewModel {
 	public void tagClick(@BindingParam("tagId")String tagId) {
 		int id = Integer.parseInt(tagId);
 		//change article counts by tag
+
 		if (_selectedTagId != id) {
 			_selectedTagId = id;
+			log.debug("set selectedTagId:"+tagId);
 			articleClose();
 			//refresh include
 			veiwInner.invalidate();

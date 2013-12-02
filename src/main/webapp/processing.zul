@@ -1,4 +1,4 @@
-<?page title="processing" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <zk>
 	<style>
 		.processing{
@@ -19,9 +19,9 @@
 						<label value="@load(art.title)"></label>
 					</listcell>
 					<listcell>
-						<label value="processing"></label>
+						<label value="${c:l('processing_state')}"></label>
 					</listcell>
-					<listcell><button label="cancel" onClick="@command('cancel',id=art.id)"/></listcell>
+					<listcell><button label="${c:l('processing_cancel')}" onClick="@command('cancel',id=art.id)"/></listcell>
 				</listitem>
 			</template>
 		</listbox>
