@@ -1,4 +1,4 @@
-
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <zk>
 	<style>
 		.index-borderlayout .z-button,.index-borderlayout .z-button:focus,.index-borderlayout .z-button:hover {
@@ -14,7 +14,7 @@
 	<hbox width="1000px" apply="org.zkoss.bind.BindComposer" viewModel="@id('indexvm') @init('com.danchen.biblio.viewmodel.IndexViewModel')">								
 		<listbox model="@load(indexvm.topics)">
 			<listhead>
-				<listheader label="New Topics"/>
+				<listheader label="${c:l('index_newTopics')}"/>
 			</listhead>			
 			<template name="model" var="topic">
 				<listitem onClick="@command('clickArtTitle',articleId=topic.id)">
@@ -25,7 +25,7 @@
 		</listbox>
 		<listbox model="@load(indexvm.posts)">
 			<listhead>
-				<listheader label="Last Posts"/>
+				<listheader label="${c:l('index_lastPosts')}"/>
 			</listhead>
 			<template name="model" var="post">
 				<listitem onClick="@command('clickArtTitle',articleId=post.id)">
@@ -36,7 +36,7 @@
 		</listbox>
 		<listbox model="@load(indexvm.personal)">
 			<listhead>
-				<listheader label="Personal"/>
+				<listheader label="${c:l('index_personal')}"/>
 			</listhead>
 			<template name="model" var="pPost">
 				<listitem onClick="@command('clickArtTitle',articleId=pPost.id)">

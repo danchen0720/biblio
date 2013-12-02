@@ -117,15 +117,13 @@ public class ArticleDAO {
 		Query query = session.createQuery("from Article as art where art.id=:articleId and state = 1");
 		query.setInteger("articleId", articleId);
 		Article result = (Article) query.uniqueResult();
-		System.out.println(articleId+"_findOne");
 		return result;
 	}
 	public Article findRoot(int articleId){
 		Session session = HibernateUtil.currentSession();
 		Query query = session.createQuery("from Article as art where art.id=:articleId");
 		query.setInteger("articleId", articleId);
-		Article result = (Article) query.uniqueResult();
-		return result;
+		return (Article) query.uniqueResult();
 	}
 	
 	public List<Article> getArtFamily(int articleId) {
@@ -153,5 +151,23 @@ public class ArticleDAO {
 		Session session = HibernateUtil.currentSession();
 		String hql = "from Article as art where art.topic = :topicId ORDER BY art.time desc";
 		return (Article) session.createQuery(hql).setInteger("topicId", topicId).setMaxResults(1).uniqueResult();
+	}
+	public List<Article> getUnProcessingByUser(User user) {
+		Session session = HibernateUtil.currentSession();
+		Query query = session.createQuery("from Article as art where art.user=:user and state = 0 ORDER BY art.time DESC");
+		query.setEntity("user", user);
+		return query.list();
+	}
+	public Article findUnprocessArt(int articleId) {
+		Session session = HibernateUtil.currentSession();
+		Query query = session.createQuery("from Article as art where art.id=:articleId and state = 0");
+		query.setInteger("articleId", articleId);
+		return (Article) query.uniqueResult();
+	}
+	public void drop(Article art) {
+		System.out.println("remove_dao");
+		Session session = HibernateUtil.currentSession();
+		session.delete(art);
+		session.flush();
 	}
 }

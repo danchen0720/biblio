@@ -1,7 +1,7 @@
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
 <?page title="login" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="login" width="400px" border="normal" style="position:relative;margin:0px auto; top:30%;">
+<window title="" width="400px" border="normal" style="position:relative;margin:0px auto; top:30%;">
 	<grid hflex="1" apply="org.zkoss.bind.BindComposer" 
 		viewModel="@id('loginvm') @init('com.danchen.biblio.viewmodel.LoginViewModel')">
 		<columns>
@@ -10,16 +10,16 @@
    	 	</columns>
    	 	<rows>
    	 		<row>
-   	 			${c:l('index_username')}：<textbox value="@save(loginvm.userName)" hflex="1"/>
+   	 			${c:l('login_username')}：<textbox value="@save(loginvm.userName)" hflex="1"/>
    	 		</row>
    	 		<row>
-   	 			${c:l('index_password')}：<textbox value="@save(loginvm.passWord)" hflex="1" type="password"/>
+   	 			${c:l('login_password')}：<textbox value="@save(loginvm.passWord)" hflex="1" type="password"/>
    	 		</row>
    	 	</rows>
 		<foot>
 			<footer align="right"/>
  			<footer align="right">
- 				<button label="Login" onClick="@command('login')"/>
+ 				<button label="${c:l('login_login')}" onClick="@command('login')"/>
  			</footer>	
  		</foot>
 	</grid>

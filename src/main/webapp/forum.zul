@@ -1,3 +1,5 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?page id="P"?>
 <zk>
 	<style>
 		.tag-btn .z-button{
@@ -17,19 +19,20 @@
 			height: 25px;
 		}
 	</style>
-
 	<div id="forumContent" width="900px"
 		 apply="org.zkoss.bind.BindComposer" viewModel="@id('fourmvm') @init('com.danchen.biblio.viewmodel.ForumViewModel')">
 		 
 	 	<div sclass="topbar">
-			<label value="username"/>
-			<a href="/personal.zul" label="Personal Post"/>
-			<a href="" onClick="@command('logout')" label="Log out"/>
-			<button style="float:right" label="treeview" onClick="@command('changeView',onTreeView=true)"/>
-			<button style="float:right" label="liseview" onClick="@command('changeView',onTreeView=false)"/>
+			<a href="/personal.zul" label="${c:l('forum_personalPost')}"/>
+			<a href="" onClick="@command('logout')" label="${c:l('forum_logout')}"/>
+			<button style="float:right" label="${c:l('forum_treeview')}" onClick="@command('changeView',onTreeView=true)"/>
+			<button style="float:right" label="${c:l('forum_liseview')}" onClick="@command('changeView',onTreeView=false)"/>
 		</div>
-		<div style="margin-top:3em;">
-			<button style="float:right" label="New Topic" onClick="@command('addNewTopic')"/>
+	
+		<include id="processingInner" src="/processing.zul" style="float:left"/>
+
+		<div id="addNewBtn" style="margin-top:3em;">
+			<button style="float:right;" label="${c:l('forum_addNewTopic')}" onClick="@command('addNewTopic')"/>
 		</div>
 		<div id="viewArea" style="clear:both; margin-top:5em;">
 			<include id="veiwInner" src="list.zul" />

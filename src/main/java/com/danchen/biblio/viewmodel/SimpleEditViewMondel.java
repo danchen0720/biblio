@@ -25,7 +25,7 @@ public class SimpleEditViewMondel {
 	public SimpleEditViewMondel(){
 		artServ = new ArticleService();
 		Object obj = Executions.getCurrent().getAttribute("id");
-		if(obj != null){
+		if (obj != null) {
 			postId = (Integer) obj;
 			user = (User) Executions.getCurrent().getSession().getAttribute("user");
 			inner = (Include) Executions.getCurrent().getAttribute("inner");

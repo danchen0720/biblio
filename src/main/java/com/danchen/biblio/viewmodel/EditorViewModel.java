@@ -9,8 +9,10 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Path;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Include;
 import org.zkoss.zul.Selectbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
@@ -25,6 +27,7 @@ public class EditorViewModel {
 	private ArticleService artServ;
 	private TagService tagServ;
 	private boolean isModify;
+	private boolean modifyProcessing;
 	private int articleId;
 	@Wire
 	private Window editorWindow;
@@ -33,9 +36,11 @@ public class EditorViewModel {
 	@Wire
 	private Selectbox tagSelect;
 	
+	private Include processingIner;
+	
 	private String header;
 	private List<Tag> tags;
-	private Article data;
+	private Article bean;
 	private int tagSelectedIndex;
 
 	//article bean
@@ -45,7 +50,8 @@ public class EditorViewModel {
 	private String title;
 	private Tag tag;
 	
-	public EditorViewModel() {						
+	public EditorViewModel() {
+		processingIner = (Include) Executions.getCurrent().getSession().getAttribute("processingInner");
 		artServ = new ArticleService();
 		tagServ = new TagService();
 		tags = tagServ.getAll();
@@ -54,49 +60,66 @@ public class EditorViewModel {
 			isModify = true;
 			//get need modify article
 			articleId = (Integer) Executions.getCurrent().getArg().get("articleId");
-			data = artServ.getArtById(articleId);
-			if(data.getTags().size() > 0){
-				tagSelectedIndex = tags.indexOf(data.getTags().iterator().next());
+			bean = artServ.getArtById(articleId);
+			if (bean.getTags().size() > 0) {
+				tagSelectedIndex = tags.indexOf(bean.getTags().iterator().next());
 			}
-			
-			title = data.getTitle();
-			content = data.getContent();
+			title = bean.getTitle();
+			content = bean.getContent();
+		} else if (Executions.getCurrent().getArg().get("modifyProcessing") != null) {
+			modifyProcessing = true;
+			articleId = (Integer) Executions.getCurrent().getArg().get("articleId");
+			bean = artServ.getUnprocessArtById(articleId);
+			if (bean.getTags().size() > 0) {
+				tagSelectedIndex = tags.indexOf(bean.getTags().iterator().next());
+			}
+			title = bean.getTitle();
+			content = bean.getContent();
 		}
+		//get processing iclude
+		processingIner =  (Include) Executions.getCurrent().getSession().getAttribute("processingInner");
 	}
 	
 	@AfterCompose(superclass=true)
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         Selectors.wireComponents(view, this, false);
-        
-        if(isModify){
+ 
+        if (isModify) {
         	titleText.setDisabled(true);
         }
     }
 	
 	@Command
 	public void post() {
-		if (!isModify) {
-			//add new topic
-			time = new Date();
-			content = time.toString();
-			title = "Title_"+time;
-			if (title != null && title.length() > 0) {
-				if (content != null && content.length() > 0) {
-					artServ.insertTopic(user,time,content,title,tags.get(tagSelectedIndex));
-					Executions.getCurrent().sendRedirect("/fourm.zul");
-				}
+		if (isModify) {
+			if (content != null && content.length() > 0) {
+				artServ.updateModify(time, content, tags.get(tagSelectedIndex), bean.getId());
+				Executions.getCurrent().sendRedirect("/personal.zul");
 			}
 		} else {
-			if (content != null && content.length() > 0) {
-				artServ.updateModify(time, content, tags.get(tagSelectedIndex), data.getId());
-				Executions.getCurrent().sendRedirect("/personal.zul");
+			//add new topic
+			time = new Date();
+			if (title != null && title.length() > 0) {
+				if (content != null && content.length() > 0) {
+					if (modifyProcessing)
+						artServ.updateModify(time, content, tags.get(tagSelectedIndex), bean.getId());
+					else
+						artServ.insertTopic(user,time,content,title,tags.get(tagSelectedIndex));
+					
+					processingIner.invalidate();
+					editorWindow.detach();
+				}
 			}
 		}
 	}
 	
 	//window
 	@Command
-	public void cancel(){
+	public void cancel() {
+		if (modifyProcessing) {
+			artServ.removeUnProcess(bean.getId());
+			processingIner.invalidate();
+		}
 		editorWindow.detach();
 	}
 	

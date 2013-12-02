@@ -39,17 +39,16 @@ public class PersonalVeiwModel {
 	}
 	@Command
 	public void delete(@BindingParam("id") final int id) {
-		int temp = Messagebox.show("Question is pressed. Are you sure?", "Question",
-		Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,  new EventListener<Event>() {
-	       public void onEvent(Event event) throws Exception {
-	           //if clicks ok to do something
-	           if (((Integer) event.getData()).intValue() == Messagebox.OK) {
-	        	   artServ.delete(id);
-	        	   Executions.getCurrent().sendRedirect("");
-	           }
-	       }
+		Messagebox.show("Question is pressed. Are you sure?", "Question",
+			Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,  new EventListener<Event>() {
+		       public void onEvent(Event event) throws Exception {
+		           //if clicks ok to do something
+		           if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+		        	   artServ.delete(id);
+		        	   Executions.getCurrent().sendRedirect("");
+		           }
+		       }
 		});
-
 	}
 	
 	//getter, setter

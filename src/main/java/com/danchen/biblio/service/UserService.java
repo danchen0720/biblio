@@ -10,9 +10,9 @@ public class UserService {
 		userDao = new UserDAO();
 	}
 	
-	public User getUser(String userName, String passWord){
+	public User getUser(String userName, String passWord) {
 		User user = userDao.findOneBy(userName);
-		if(user != null){
+		if (user != null) {
 			if(passWord.equals(user.getPassword()))
 				return user;
 		}

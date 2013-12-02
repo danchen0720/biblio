@@ -7,6 +7,7 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Path;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Include;
 
@@ -27,7 +28,7 @@ public class ArticleViewModel {
 
 	public List<Article> getArts() {
 		Object temp = Executions.getCurrent().getAttribute("articleId");
-		if(temp != null){
+		if (temp != null) {
 			String articleId = temp+"";
 			boolean onTreeView = (Boolean) Executions.getCurrent().getAttribute("onTreeView");
 			return artServ.getArtsById(articleId,onTreeView); 

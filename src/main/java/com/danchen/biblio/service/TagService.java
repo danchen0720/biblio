@@ -41,23 +41,23 @@ public class TagService {
 	public List<Article> getArtsByTag(int id, boolean isTree) {
 		List<Article> arts = new ArrayList<Article>();
 		ArticleDAO artDao = new ArticleDAO();
-		if(id < 0) 
+		if (id < 0) 
 			//get topic's top new posts
 			arts.addAll(artDao.findMainArts());	
 		else {
 			//get article by tag and check state
 			List<Article> tempList = new ArrayList(tagDao.findOne(id).getArticles());
 			Article art;
-			for(Iterator<Article> itr = tempList.iterator(); itr.hasNext(); ){
+			for (Iterator<Article> itr = tempList.iterator(); itr.hasNext(); ) {
 				art = itr.next();
 				if(art.getState() != 1 || art.getParent() != 0)
 					itr.remove();
 			}
 			arts.addAll(tempList);
 		}
-		if(!arts.isEmpty())
+		if (!arts.isEmpty())
 			lastPostTimeSort(arts);
-		if(isTree)
+		if (isTree)
 			arts.add(0,artDao.findRoot(0));//add root	
 		
 		return arts;

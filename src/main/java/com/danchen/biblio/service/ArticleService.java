@@ -18,7 +18,7 @@ public class ArticleService {
 	
 	public void updateModify(Date time, String content, Tag tag,int id) {
 		Article bean = artDao.findOne(id);
-		if(bean != null){
+		if (bean != null) {
 			artDao.update(time, content, tag, id);
 		}
 	}
@@ -101,10 +101,31 @@ public class ArticleService {
 	}
 	
 	public Article getArtById(int postId) {
-		if(postId >= 1){
+		if (postId >= 1) {
 			//article id 0 is root
 				return artDao.findOne(postId);
 		}
 		return null;
+	}
+	public List<Article> processingArt(User user) {
+		return artDao.getUnProcessingByUser(user);
+	}
+	public void updateState(Article art) {
+		artDao.update(1, art.getId());
+	}
+	public Article getUnprocessArtById(int postId) {
+		if (postId >= 1) {
+			//article id 0 is root
+				return artDao.findUnprocessArt(postId);
+		}
+		return null;
+	}
+	public boolean removeUnProcess(Integer id) {
+		Article art = artDao.findUnprocessArt(id);
+		if (art != null) {
+			artDao.drop(art);
+			return true;
+		}
+		return false;
 	}
 }

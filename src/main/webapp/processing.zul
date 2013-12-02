@@ -1,0 +1,29 @@
+<?page title="processing" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<style>
+		.processing{
+			font-size:5px;
+			float:right;
+		}
+	</style>
+	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('fourmvm') @init('com.danchen.biblio.viewmodel.ProcessingViewModel')"> 
+		<listbox sclass="processing" width="60em" model="@load(fourmvm.arts)">
+			<listhead>
+				<listheader align="center"/>
+				<listheader align="center"/>
+				<listheader align="center"/>
+			</listhead>
+			<template name="model" var="art">
+				<listitem>
+					<listcell>
+						<label value="@load(art.title)"></label>
+					</listcell>
+					<listcell>
+						<label value="processing"></label>
+					</listcell>
+					<listcell><button label="cancel" onClick="@command('cancel',id=art.id)"/></listcell>
+				</listitem>
+			</template>
+		</listbox>
+	</div>
+</zk>
