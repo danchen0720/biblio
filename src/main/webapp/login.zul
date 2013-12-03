@@ -10,10 +10,10 @@
    	 	</columns>
    	 	<rows>
    	 		<row>
-   	 			${c:l('login_username')}：<textbox value="@save(loginvm.userName)" hflex="1"/>
+   	 			${c:l('login_username')}：<textbox value="@save(loginvm.userName)" onOK="@command('login')" hflex="1"/>
    	 		</row>
    	 		<row>
-   	 			${c:l('login_password')}：<textbox value="@save(loginvm.passWord)" hflex="1" type="password"/>
+   	 			${c:l('login_password')}：<textbox value="@save(loginvm.passWord)" hflex="1" type="password"  onOK="@command('login')"/>
    	 		</row>
    	 	</rows>
 		<foot>

@@ -1,5 +1,5 @@
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
-<?page id="P"?>
+<?page id="forumZul"?>
 <zk>
 	<style>
 		.tag-btn .z-button{
@@ -25,16 +25,16 @@
 	 	<div sclass="topbar">
 			<a href="/personal.zul" label="${c:l('forum_personalPost')}"/>
 			<a href="" onClick="@command('logout')" label="${c:l('forum_logout')}"/>
-			<button style="float:right" label="${c:l('forum_treeview')}" onClick="@command('changeView',onTreeView=true)"/>
-			<button style="float:right" label="${c:l('forum_liseview')}" onClick="@command('changeView',onTreeView=false)"/>
 		</div>
 	
 		<include id="processingInner" src="/processing.zul" style="float:left"/>
-
-		<div id="addNewBtn" style="margin-top:3em;">
+		
+		<hbox id="addNewBtn" style="float:right">
+			<button style="float:right" label="${c:l('forum_treeview')}" onClick="@command('changeView',onTreeView=true)"/>
+			<button style="float:right" label="${c:l('forum_liseview')}" onClick="@command('changeView',onTreeView=false)"/>
 			<button style="float:right;" label="${c:l('forum_addNewTopic')}" onClick="@command('addNewTopic')"/>
-		</div>
-		<div id="viewArea" style="clear:both; margin-top:5em;">
+		</hbox>
+		<div id="viewArea" style="clear:both;">
 			<include id="veiwInner" src="list.zul" />
 		</div>
 		<div sclass="tag-btn">

@@ -9,9 +9,11 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Path;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.EventQueue;
@@ -33,20 +35,15 @@ import com.danchen.biblio.tm.TagsTreeModel;
 public class ForumViewModel {
 	private static final Logger log = LoggerFactory.getLogger(OpenSessionInViewListener.class);
 	private TagService tagServ = new TagService();
-	private ArticleService artServ = new ArticleService();
-	private List<Tag> _tags;
-	private List<Article> _arts;
-	private boolean _onTreeView = false;
-	private int _selectedTagId = -1;
+	private List<Tag> tags;
+	private boolean onTreeView = false;
+	private int selectedTagId = -1;
 	
 	@Wire("#viewArea")//wire component by id
 	private Div viewArea;
-	
 	@Wire("#veiwInner")
 	private Include veiwInner;
 	private Include articleInner;
-	@Wire("#processingInner")
-	private Include processingInner;
 
 	@AfterCompose(superclass=true)
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
@@ -59,9 +56,8 @@ public class ForumViewModel {
     			clickArtTitle(articleId);
     		}
         }
-        Executions.getCurrent().getSession().setAttribute("processingInner",processingInner);
     }
-	
+
 	@Command
 	public void changeView(@BindingParam("onTreeView")boolean onTreeView) {
 		if(onTreeView)
@@ -69,8 +65,9 @@ public class ForumViewModel {
 		else
 			veiwInner.setSrc("/list.zul");
 		
-		_onTreeView = onTreeView;
-		articleClose();
+		this.onTreeView = onTreeView;
+		articleClose();		
+		//refresh the view
 		veiwInner.invalidate();
 	}
 	private void articleClose(){
@@ -85,19 +82,17 @@ public class ForumViewModel {
 			if (articleInner == null) {
 				articleInner = new Include();
 				articleInner.setSrc("/article.zul");
-				articleInner.setDynamicProperty("articleId",articleId);
-				articleInner.setDynamicProperty("onTreeView",_onTreeView);
-				log.debug("articleInner set articleId:"+articleId);
-				log.debug("articleInner set onTreeView:"+_onTreeView);
+				articleInner.setId("articleInner");
+			} 
+			articleInner.setDynamicProperty("articleId", articleId);
+			log.debug("articleInner set articleId:"+articleId);
+			articleInner.setDynamicProperty("onTreeView",onTreeView);
+			log.debug("articleInner set onTreeView:"+onTreeView);
+			viewArea.insertBefore(articleInner, viewArea);
+			if (articleInner == null)
 				viewArea.insertBefore(articleInner, viewArea);
-			} else{ 
-				articleInner.setDynamicProperty("articleId", articleId);
-				articleInner.setDynamicProperty("onTreeView",_onTreeView);
-				log.debug("articleInner set articleId:"+articleId);
-				log.debug("articleInner set onTreeView:"+_onTreeView);
-				viewArea.insertBefore(articleInner, viewArea);
+			else
 				articleInner.invalidate();
-			}
 		}
 	}
 	
@@ -113,11 +108,10 @@ public class ForumViewModel {
 		int id = Integer.parseInt(tagId);
 		//change article counts by tag
 
-		if (_selectedTagId != id) {
-			_selectedTagId = id;
+		if (selectedTagId != id) {
+			selectedTagId = id;
 			log.debug("set selectedTagId:"+tagId);
 			articleClose();
-			//refresh include
 			veiwInner.invalidate();
 		}
 	}
@@ -131,32 +125,35 @@ public class ForumViewModel {
 	
 	//constructor
 	public ForumViewModel() {
-		_tags = tagServ.getAll();
+		tags = tagServ.getAll();
 
-        //check have new arts or not
+        //post new topic will refresh
         EventQueue<Event> que = EventQueues.lookup("artsUpdate", EventQueues.APPLICATION, true);
 		que.subscribe(new EventListener<Event>() {
 	        public void onEvent(Event evt) {
-				Executions.getCurrent().sendRedirect("");
+	        	System.out.println("EventQueues");
+	        	veiwInner.invalidate();
+	        	Path.getComponent("/processingInner").invalidate();
+	        	articleClose();
 	        }
 		}); 
 	}
 	
 	// getter and setter
 	public List<Tag> getTags() {
-		return _tags;
+		return tags;
 	}
 	public void setTags(List<Tag> tags) {
-		_tags = tags;
+		this.tags = tags;
 	}
 
-	public TreeModel getTm() {
+	public TreeModel getTreeModel() {
 		//dynamic change the item in tree
-		return new TagsTreeModel(tagServ.getArtsByTag(_selectedTagId,true));
+		return new TagsTreeModel(tagServ.getArtsByTag(selectedTagId,true));
 	}
 
-	public List<Article> getArts() {
-		return tagServ.getArtsByTag(_selectedTagId,false);
+	public List<Article> getArtsList() {
+		return tagServ.getArtsByTag(selectedTagId,false);
 	}
 	
 }

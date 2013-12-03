@@ -39,8 +39,23 @@ public class ArticleDAO {
 		Session session = HibernateUtil.currentSession();
 		Article bean = (Article)session.get(Article.class, id);
 		if (bean != null) {
-			//bean.setTime(time);
+			bean.setTime(time);
 			bean.setContent(content);
+			Set tempSet = new HashSet();
+			tempSet.add(tag);
+			bean.setTags(tempSet);
+			session.flush();
+			return bean;
+		}
+		return null;
+	}
+	public Article update(Date time, String content, String title, Tag tag, int id) {
+		Session session = HibernateUtil.currentSession();
+		Article bean = (Article)session.get(Article.class, id);
+		if (bean != null) {
+			bean.setTime(time);
+			bean.setContent(content);
+			bean.setTitle(title);
 			Set tempSet = new HashSet();
 			tempSet.add(tag);
 			bean.setTags(tempSet);
@@ -112,6 +127,13 @@ public class ArticleDAO {
 		return session.createQuery("from Article as art where art.id <> 0 ORDER BY art.time DESC").setMaxResults(quantity).list();
 	}
 	
+	public Article findUnprocessingOne(int articleId){
+		Session session = HibernateUtil.currentSession();
+		Query query = session.createQuery("from Article as art where art.id=:articleId and state = 0");
+		query.setInteger("articleId", articleId);
+		Article result = (Article) query.uniqueResult();
+		return result;
+	}
 	public Article findOne(int articleId){
 		Session session = HibernateUtil.currentSession();
 		Query query = session.createQuery("from Article as art where art.id=:articleId and state = 1");
@@ -165,7 +187,6 @@ public class ArticleDAO {
 		return (Article) query.uniqueResult();
 	}
 	public void drop(Article art) {
-		System.out.println("remove_dao");
 		Session session = HibernateUtil.currentSession();
 		session.delete(art);
 		session.flush();

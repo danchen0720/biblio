@@ -13,7 +13,7 @@ public class OpenSessionInViewListener implements ExecutionInit, ExecutionCleanu
  
     public void init(Execution exec, Execution parent) {
         if (parent == null) { //the root execution of a servlet request
-            log.debug("Starting a database transaction: "+exec);
+            //log.debug("Starting a database transaction: "+exec);
             HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
         }
     }
@@ -21,7 +21,7 @@ public class OpenSessionInViewListener implements ExecutionInit, ExecutionCleanu
     public void cleanup(Execution exec, Execution parent, List errs) {
         if (parent == null) { //the root execution of a servlet request
             if (errs == null || errs.isEmpty()) {
-                log.debug("Committing the database transaction: "+exec);
+             //   log.debug("Committing the database transaction: "+exec);
                 HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();
             } else {
                 final Throwable ex = (Throwable) errs.get(0);
@@ -33,11 +33,11 @@ public class OpenSessionInViewListener implements ExecutionInit, ExecutionCleanu
     private void rollback(Execution exec, Throwable ex) {
         try {
             if (HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().isActive()) {
-                log.debug("Trying to rollback database transaction after exception:"+ex);
+           //     log.debug("Trying to rollback database transaction after exception:"+ex);
                 HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().rollback();
             }
         } catch (Throwable rbEx) {
-            log.error("Could not rollback transaction after exception! Original Exception:\n"+ex, rbEx);
+           // log.error("Could not rollback transaction after exception! Original Exception:\n"+ex, rbEx);
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.danchen.biblio.viewmodel;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.zkoss.bind.annotation.BindingParam;
@@ -13,45 +12,47 @@ import com.danchen.biblio.service.ArticleService;
 
 public class IndexViewModel {
 	private ArticleService artServ;
-	private List<Article> _topics;
-	private List<Article> _posts;
-	private List<Article> _personal;
+	private List<Article> topics;
+	private List<Article> posts;
+	private List<Article> personal;
 	
 	public IndexViewModel() {
 		artServ = new ArticleService();
-		_topics = artServ.getToptics();
-		_posts = artServ.getPosts();
+		topics = artServ.getToptics();
+		posts = artServ.getPosts();
 		User user = (User) Executions.getCurrent().getSession().getAttribute("user");
-		_personal = artServ.getPersonal(user.getUsername());
+		personal = artServ.getPersonal(user.getUsername());
 	}
 	
 	@Command
 	public void clickArtTitle(@BindingParam("articleId")String articleId) {
+		//save data in session, and open the topic on forum
 		if (articleId != null) {
-			Executions.getCurrent().getSession().setAttribute("articleId", artServ.getTopicByPost(articleId).getId());
+			Executions.getCurrent().getSession().setAttribute("articleId",
+					artServ.getArtById(Integer.parseInt(articleId)).getTopic());
 			Executions.sendRedirect("/forum.zul");
 		}
 	}
 	
 	//  getter setter
 	public List<Article> getTopics() {
-		return _topics;
+		return topics;
 	}
 	public void setTopics(List<Article> topics) {
-		_topics = topics;
+		this.topics = topics;
 	}
 
 	public List<Article> getPosts() {
-		return _posts;
+		return posts;
 	}
 	public void setPost(List<Article> posts) {
-		_posts = posts;
+		this.posts = posts;
 	}
 
 	public List<Article> getPersonal() {
-		return _personal;
+		return personal;
 	}
 	public void setPersonal(List<Article> personal) {
-		_personal = personal;
+		this.personal = personal;
 	}
 }

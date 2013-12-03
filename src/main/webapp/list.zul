@@ -9,7 +9,7 @@
     	}
 	</style>
 	<div>
-		<listbox model="@load(fourmvm.arts)">
+		<listbox mold="paging" pageSize="10" model="@load(fourmvm.artsList)">
 			<listhead>
 				<listheader label="${c:l('list_topic')}" hflex="5"/>
 				<listheader label="${c:l('list_lastPost')}" hflex="1"/>

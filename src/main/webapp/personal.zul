@@ -1,7 +1,8 @@
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?page id="personalZul"?>
 <zk>
-	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('personalvm') @init('com.danchen.biblio.viewmodel.PersonalVeiwModel')">
-		<listbox width="100%" model="@load(personalvm.arts)">
+	<div id="personalContent" apply="org.zkoss.bind.BindComposer" viewModel="@id('personalvm') @init('com.danchen.biblio.viewmodel.PersonalVeiwModel')">
+		<listbox width="100%" model="@bind(personalvm.arts)">
 		    <auxhead>
 		        <auxheader label="${c:l('personal_hello')}" colspan="5" />
 		    </auxhead>
@@ -15,7 +16,7 @@
 			<template name="model" var="art">
 				<listitem>
 					<listcell><label value="@load(art.title)"/></listcell>
-					<listcell><label value="@load(art.time)"/></listcell>
+					<listcell><label value="@load(art.time) @converter('formatedDate', format='yyyy/MM/dd HH:mm')"/></listcell>
 					<zk if="${art.state == 0}">
 						<listcell><label value="${c:l('personal_state_unprocessed')}"/></listcell>
 					</zk>

@@ -16,12 +16,19 @@ public class ArticleService {
 	private ArticleDAO artDao;
 	private UserDAO userDao;
 	
-	public void updateModify(Date time, String content, Tag tag,int id) {
+	public void updateModify(String content, Tag tag, int id) {
 		Article bean = artDao.findOne(id);
 		if (bean != null) {
-			artDao.update(time, content, tag, id);
+			artDao.update(new Date(), content, tag, id);
 		}
 	}
+	public void updateModify(String content, String title, Tag tag, int id) {
+		Article bean = artDao.findUnprocessingOne(id);
+		if (bean != null) {
+			artDao.update(new Date(), content, title, tag, id);
+		}
+	}
+	
 	public void delete(int id) {
 		Article bean = artDao.findOne(id);
 		if (bean.getParent() != 0)//article is post
@@ -66,20 +73,6 @@ public class ArticleService {
 		return artDao.findPosts(10);
 	}
 	
-	public Article getTopicByPost(String articleId) {
-		if (articleId != null) {
-			int id = Integer.parseInt(articleId);
-			Article tempArt = artDao.findOne(id);
-			if (tempArt != null) {
-				for (; tempArt.getParent() > 0 ; ) {
-					tempArt = artDao.findOne(tempArt.getParent());
-				}
-			}
-			return tempArt;
-		}
-		return null;
-	}
-	
 	public List<Article> getArtsById(String articleId,boolean onTreeView) {
 		if (articleId != null) {
 			int id = Integer.parseInt(articleId);
@@ -103,7 +96,7 @@ public class ArticleService {
 	public Article getArtById(int postId) {
 		if (postId >= 1) {
 			//article id 0 is root
-				return artDao.findOne(postId);
+			return artDao.findOne(postId);
 		}
 		return null;
 	}

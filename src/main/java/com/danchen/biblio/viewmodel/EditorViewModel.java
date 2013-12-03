@@ -3,6 +3,8 @@ package com.danchen.biblio.viewmodel;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
@@ -24,6 +26,7 @@ import com.danchen.biblio.service.ArticleService;
 import com.danchen.biblio.service.TagService;
 
 public class EditorViewModel {
+	private static final Logger log = LoggerFactory.getLogger(EditorViewModel.class);
 	private ArticleService artServ;
 	private TagService tagServ;
 	private boolean isModify;
@@ -35,9 +38,7 @@ public class EditorViewModel {
 	private Textbox titleText;
 	@Wire
 	private Selectbox tagSelect;
-	
-	private Include processingIner;
-	
+	private Include processingInner;
 	private String header;
 	private List<Tag> tags;
 	private Article bean;
@@ -51,33 +52,32 @@ public class EditorViewModel {
 	private Tag tag;
 	
 	public EditorViewModel() {
-		processingIner = (Include) Executions.getCurrent().getSession().getAttribute("processingInner");
 		artServ = new ArticleService();
 		tagServ = new TagService();
 		tags = tagServ.getAll();
 		user = (User) Executions.getCurrent().getSession().getAttribute("user");
-		if (Executions.getCurrent().getArg().get("isModify") != null) {
+		processingInner = (Include) Path.getComponent("//forumZul/processingInner");
+		
+		if (Executions.getCurrent().getArg().get("isModify") != null ) {
 			isModify = true;
-			//get need modify article
 			articleId = (Integer) Executions.getCurrent().getArg().get("articleId");
 			bean = artServ.getArtById(articleId);
-			if (bean.getTags().size() > 0) {
-				tagSelectedIndex = tags.indexOf(bean.getTags().iterator().next());
-			}
-			title = bean.getTitle();
-			content = bean.getContent();
+			log.debug("get article:"+bean+" on modify type");
 		} else if (Executions.getCurrent().getArg().get("modifyProcessing") != null) {
 			modifyProcessing = true;
 			articleId = (Integer) Executions.getCurrent().getArg().get("articleId");
 			bean = artServ.getUnprocessArtById(articleId);
+			log.debug("get article:"+bean+" on modifyProcessing type");
+		}
+		
+		if (isModify || modifyProcessing) {
 			if (bean.getTags().size() > 0) {
 				tagSelectedIndex = tags.indexOf(bean.getTags().iterator().next());
+				log.debug("tagSelectedIndex: "+tagSelectedIndex);
 			}
 			title = bean.getTitle();
 			content = bean.getContent();
-		}
-		//get processing iclude
-		processingIner =  (Include) Executions.getCurrent().getSession().getAttribute("processingInner");
+		}		
 	}
 	
 	@AfterCompose(superclass=true)
@@ -93,20 +93,24 @@ public class EditorViewModel {
 	public void post() {
 		if (isModify) {
 			if (content != null && content.length() > 0) {
-				artServ.updateModify(time, content, tags.get(tagSelectedIndex), bean.getId());
-				Executions.getCurrent().sendRedirect("/personal.zul");
+				artServ.updateModify(content, tags.get(tagSelectedIndex), bean.getId());
+				log.debug("EditorViewModel update Article by id:"+tagSelectedIndex+" on modify type");
+				Path.getComponent("//personalZul/personalContent").invalidate();
+				editorWindow.detach();
 			}
 		} else {
 			//add new topic
 			time = new Date();
 			if (title != null && title.length() > 0) {
 				if (content != null && content.length() > 0) {
-					if (modifyProcessing)
-						artServ.updateModify(time, content, tags.get(tagSelectedIndex), bean.getId());
-					else
-						artServ.insertTopic(user,time,content,title,tags.get(tagSelectedIndex));
-					
-					processingIner.invalidate();
+					if (modifyProcessing) {
+						artServ.updateModify(content, title, tags.get(tagSelectedIndex), bean.getId());
+						log.debug("EditorViewModel update Article by id:"+tagSelectedIndex+" on modifyProcessing type");
+					} else {
+						artServ.insertTopic(user, time, content, title, tags.get(tagSelectedIndex));
+						log.debug("EditorViewModel update Article by id:"+tagSelectedIndex+" on add new topic type");
+					}
+					processingInner.invalidate();
 					editorWindow.detach();
 				}
 			}
@@ -118,7 +122,7 @@ public class EditorViewModel {
 	public void cancel() {
 		if (modifyProcessing) {
 			artServ.removeUnProcess(bean.getId());
-			processingIner.invalidate();
+			processingInner.invalidate();
 		}
 		editorWindow.detach();
 	}

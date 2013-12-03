@@ -8,7 +8,7 @@
     		background-color : white;
     	}
     </style>
-	<tree id="artTreeView" model="@load(fourmvm.tm)">
+	<tree id="artTreeView" model="@load(fourmvm.treeModel)"  mold="paging" pageSize="10">
 	    <treecols>
 	        <treecol label="${c:l('tree_topic')}" hflex="5"/>
 	         <treecol label="${c:l('tree_time')}" hflex="1"/>
@@ -17,7 +17,7 @@
         	<treeitem onClick="@command('clickArtTitle',articleId=art.id)">
        			<treerow>
        				<treecell label="@load(art.title)"/>
-       				<treecell label="@load(art.time) @converter('formatedDate', format='yyyy/MM/dd HH:mm')"/>
+       				<treecell label="@load(art.postTime) @converter('formatedDate', format='yyyy/MM/dd HH:mm')"/>
         		</treerow>
         	</treeitem>
    		</template>
