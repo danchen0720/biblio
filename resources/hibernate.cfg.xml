@@ -4,11 +4,15 @@
 <hibernate-configuration>
  <session-factory>
   <property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
-  <property name="hibernate.connection.url">jdbc:hsqldb:hsql://localhost/biblio</property>
+  <property name="hibernate.connection.url">jdbc:hsqldb:file:${webroot}\WEB-INF\classes\hsqldb\data\bibliodb</property>										
+  <!-- <property name="hibernate.connection.url">jdbc:hsqldb:hsql://localhost/biblio</property> -->
   <property name="hibernate.connection.username">sa</property>
   <property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
   <property name="current_session_context_class">thread</property>
   <property name="connection.pool_size">1</property>
+  <property name="connection.shutdown">true</property> 
+  <property name="connection.writedelay">0</property>
+  
   <mapping class="com.danchen.biblio.hibernate.bean.User" resource="com/danchen/biblio/hibernate/bean/User.hbm.xml"/>
   <mapping class="com.danchen.biblio.hibernate.bean.Tag" resource="com/danchen/biblio/hibernate/bean/Tag.hbm.xml"/>
   <mapping class="com.danchen.biblio.hibernate.bean.Article" resource="com/danchen/biblio/hibernate/bean/Article.hbm.xml"/>

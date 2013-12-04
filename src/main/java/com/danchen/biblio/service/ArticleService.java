@@ -30,6 +30,7 @@ public class ArticleService {
 	}
 	
 	public void delete(int id) {
+		// change state to 2 "deleted"
 		Article bean = artDao.findOne(id);
 		if (bean.getParent() != 0)//article is post
 			artDao.update(2, id);
@@ -109,7 +110,7 @@ public class ArticleService {
 	public Article getUnprocessArtById(int postId) {
 		if (postId >= 1) {
 			//article id 0 is root
-				return artDao.findUnprocessArt(postId);
+			return artDao.findUnprocessArt(postId);
 		}
 		return null;
 	}

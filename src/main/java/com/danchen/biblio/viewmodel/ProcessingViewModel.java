@@ -50,7 +50,8 @@ public class ProcessingViewModel {
 		        	EventQueue<Event> que = EventQueues.lookup("update_"+art.getId(), EventQueues.APPLICATION, true);
     				que.subscribe(new EventListener<Event>() {
     			        public void onEvent(Event evt) {
-    						log.debug("Event:"+evt.getName()+", catched!");
+    						//get data and update article state
+    			        	log.debug("Event:"+evt.getName()+", catched!");
     			        	Map data = (Map) evt.getData();
     						Article art = (Article) data.get("article");
     						log.debug("get Article:"+art+" by Event:"+evt.getName());

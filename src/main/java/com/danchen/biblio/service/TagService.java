@@ -41,8 +41,9 @@ public class TagService {
 	public List<Article> getArtsByTag(int id, boolean isTree) {
 		List<Article> arts = new ArrayList<Article>();
 		ArticleDAO artDao = new ArticleDAO();
+		// tagid < 0 it means "all" tag
 		if (id < 0) 
-			//get topic's top new posts
+			//get topic
 			arts.addAll(artDao.findMainArts());	
 		else {
 			//get article by tag and check state

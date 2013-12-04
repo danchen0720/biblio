@@ -38,12 +38,26 @@ public class ForumViewModel {
 	private List<Tag> tags;
 	private boolean onTreeView = false;
 	private int selectedTagId = -1;
-	
 	@Wire("#viewArea")//wire component by id
 	private Div viewArea;
 	@Wire("#veiwInner")
 	private Include veiwInner;
 	private Include articleInner;
+	
+	//constructor
+	public ForumViewModel() {
+		tags = tagServ.getAll();
+
+        //post new topic will refresh
+        EventQueue<Event> que = EventQueues.lookup("artsUpdate", EventQueues.APPLICATION, true);
+		que.subscribe(new EventListener<Event>() {
+	        public void onEvent(Event evt) {
+	        	veiwInner.invalidate();
+	        	Path.getComponent("/processingInner").invalidate();
+	        	articleClose();
+	        }
+		}); 
+	}
 
 	@AfterCompose(superclass=true)
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
@@ -121,22 +135,6 @@ public class ForumViewModel {
 		Execution exec = Executions.getCurrent();
 		exec.getSession().removeAttribute("user");
 		exec.sendRedirect("/login.zul");
-	}
-	
-	//constructor
-	public ForumViewModel() {
-		tags = tagServ.getAll();
-
-        //post new topic will refresh
-        EventQueue<Event> que = EventQueues.lookup("artsUpdate", EventQueues.APPLICATION, true);
-		que.subscribe(new EventListener<Event>() {
-	        public void onEvent(Event evt) {
-	        	System.out.println("EventQueues");
-	        	veiwInner.invalidate();
-	        	Path.getComponent("/processingInner").invalidate();
-	        	articleClose();
-	        }
-		}); 
 	}
 	
 	// getter and setter

@@ -8,6 +8,11 @@
 	<display-name>biblio</display-name>
 
 	<!-- //// -->
+	
+	<listener>
+		<description>WebAppProperties</description>
+		<listener-class>com.danchen.biblio.misc.WebAppPropertiesListener</listener-class>
+	</listener>
 	<!-- ZK -->
 	<listener>
 		<description>ZK listener for session cleanup</description>
