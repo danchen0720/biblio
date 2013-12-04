@@ -2,6 +2,7 @@ package com.danchen.biblio.viewmodel;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +11,11 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Path;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventQueues;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Include;
@@ -52,20 +56,23 @@ public class EditorViewModel {
 	private Tag tag;
 	
 	public EditorViewModel() {
+		Execution exec = Executions.getCurrent();
 		artServ = new ArticleService();
 		tagServ = new TagService();
 		tags = tagServ.getAll();
-		user = (User) Executions.getCurrent().getSession().getAttribute("user");
+		user = (User) exec.getSession().getAttribute("user");
 		processingInner = (Include) Path.getComponent("//forumZul/processingInner");
 		
-		if (Executions.getCurrent().getArg().get("isModify") != null ) {
+		Map arg = exec.getArg();
+		
+		if (arg.get("isModify") != null ) {
 			isModify = true;
-			articleId = (Integer) Executions.getCurrent().getArg().get("articleId");
+			articleId = (Integer) arg.get("articleId");
 			bean = artServ.getArtById(articleId);
 			log.debug("get article:"+bean+" on modify type");
-		} else if (Executions.getCurrent().getArg().get("modifyProcessing") != null) {
+		} else if (arg.get("modifyProcessing") != null) {
 			modifyProcessing = true;
-			articleId = (Integer) Executions.getCurrent().getArg().get("articleId");
+			articleId = (Integer) arg.get("articleId");
 			bean = artServ.getUnprocessArtById(articleId);
 			log.debug("get article:"+bean+" on modifyProcessing type");
 		}
@@ -84,9 +91,8 @@ public class EditorViewModel {
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         Selectors.wireComponents(view, this, false);
  
-        if (isModify) {
+        if (isModify) 
         	titleText.setDisabled(true);
-        }
     }
 	
 	@Command
@@ -96,6 +102,7 @@ public class EditorViewModel {
 				artServ.updateModify(content, tags.get(tagSelectedIndex), bean.getId());
 				log.debug("EditorViewModel update Article by id:"+tagSelectedIndex+" on modify type");
 				Path.getComponent("//personalZul/personalContent").invalidate();
+				EventQueues.lookup("artsUpdate", EventQueues.APPLICATION,false).publish(new Event("refresh"));;
 				editorWindow.detach();
 			}
 		} else {

@@ -109,6 +109,7 @@ public class ArticleDAO {
 	
 	public List<Article> findMainArts(){
 		Session session = HibernateUtil.currentSession();
+		session.clear();
 		return session.createQuery("from Article as art where art.parent=0 and state = 1 ORDER BY art.time DESC").list();
 	}
 	public List<Article> findMainArts(int quantity){

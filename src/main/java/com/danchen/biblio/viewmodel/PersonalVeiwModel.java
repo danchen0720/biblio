@@ -35,7 +35,7 @@ public class PersonalVeiwModel {
 	
 	@Command
 	public void modify(@BindingParam("id")int id) {
-		Map args = new HashMap();
+		Map args = new HashMap(2);
 		args.put("isModify", true);
 		args.put("articleId", id);
 		

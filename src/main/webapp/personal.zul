@@ -4,7 +4,10 @@
 	<div id="personalContent" apply="org.zkoss.bind.BindComposer" viewModel="@id('personalvm') @init('com.danchen.biblio.viewmodel.PersonalVeiwModel')">
 		<listbox width="100%" model="@bind(personalvm.arts)">
 		    <auxhead>
-		        <auxheader label="${c:l('personal_hello')}" colspan="5" />
+		        <auxheader colspan="5">
+		        	<label value="${c:l('personal_hello')}"/>
+		        	<a style="margin-left:5em;" href="/forum.zul" label="${c:l('personal_back')}"></a>
+		        </auxheader>
 		    </auxhead>
 			<listhead>
 				<listheader label="${c:l('personal_title')}" hflex="5"/>

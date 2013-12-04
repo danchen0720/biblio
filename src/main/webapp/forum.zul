@@ -30,8 +30,8 @@
 		<include id="processingInner" src="/processing.zul" style="float:left"/>
 		
 		<hbox id="addNewBtn" style="float:right">
-			<button style="float:right" label="${c:l('forum_treeview')}" onClick="@command('changeView',onTreeView=true)"/>
 			<button style="float:right" label="${c:l('forum_liseview')}" onClick="@command('changeView',onTreeView=false)"/>
+			<button style="float:right" label="${c:l('forum_treeview')}" onClick="@command('changeView',onTreeView=true)"/>
 			<button style="float:right;" label="${c:l('forum_addNewTopic')}" onClick="@command('addNewTopic')"/>
 		</hbox>
 		<div id="viewArea" style="clear:both;">

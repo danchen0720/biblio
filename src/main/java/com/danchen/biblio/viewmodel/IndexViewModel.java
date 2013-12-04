@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 
 import com.danchen.biblio.hibernate.bean.Article;
@@ -28,9 +29,11 @@ public class IndexViewModel {
 	public void clickArtTitle(@BindingParam("articleId")String articleId) {
 		//save data in session, and open the topic on forum
 		if (articleId != null) {
-			Executions.getCurrent().getSession().setAttribute("articleId",
-					artServ.getArtById(Integer.parseInt(articleId)).getTopic());
-			Executions.sendRedirect("/forum.zul");
+			Execution exec = Executions.getCurrent();
+			Article clickedArt = artServ.getArtById(Integer.parseInt(articleId));
+			exec.getSession().setAttribute("articleId",
+					clickedArt.getTopic() == 0? articleId:clickedArt.getTopic());
+			exec.sendRedirect("/forum.zul");
 		}
 	}
 	

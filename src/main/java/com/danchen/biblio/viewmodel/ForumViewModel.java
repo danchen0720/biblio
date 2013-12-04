@@ -14,6 +14,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Path;
+import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.EventQueue;
@@ -62,13 +63,14 @@ public class ForumViewModel {
 	@AfterCompose(superclass=true)
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
         Selectors.wireComponents(view, this, false);
-        Object temp = Executions.getCurrent().getSession().getAttribute("articleId");
+        //get id from index and open the topic 
+        Session session = Executions.getCurrent().getSession();
+        Object temp = session.getAttribute("articleId");
         if (temp != null) {
-        	String articleId = temp+"";
-    		if (articleId != null) {
-    			Executions.getCurrent().getSession().removeAttribute("articleId");
-    			clickArtTitle(articleId);
-    		}
+        	String articleId = (String) temp;
+        	
+			session.removeAttribute("articleId");
+			clickArtTitle(articleId);
         }
     }
 
@@ -103,6 +105,7 @@ public class ForumViewModel {
 			articleInner.setDynamicProperty("onTreeView",onTreeView);
 			log.debug("articleInner set onTreeView:"+onTreeView);
 			viewArea.insertBefore(articleInner, viewArea);
+			//How to show article base on include was builded or not
 			if (articleInner == null)
 				viewArea.insertBefore(articleInner, viewArea);
 			else
@@ -114,7 +117,7 @@ public class ForumViewModel {
 	public void addNewTopic() {
 		Window window = (Window)Executions.createComponents(
 	                "/editor.zul", null, null);
-	        window.doModal();
+	    window.doModal();
 	}
 	
 	@Command
@@ -123,10 +126,10 @@ public class ForumViewModel {
 		//change article counts by tag
 
 		if (selectedTagId != id) {
-			selectedTagId = id;
 			log.debug("set selectedTagId:"+tagId);
 			articleClose();
 			veiwInner.invalidate();
+			selectedTagId = id;
 		}
 	}
 	
